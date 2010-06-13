@@ -1,0 +1,95 @@
+
+
+SRCDIR?=	${.CURDIR}
+OBJDIR?=	${.CURDIR}/obj
+PUBDIR?=	${.CURDIR}/pub
+
+#BLOGREEN=	${.CURDIR}/blogreen/core
+# XXX: Build infrastructure should found this.
+# BLOGREEN should point to the 'core' directory where stylsheets are found.
+.if !defined(BLOGREEN)
+.error BLOGREEN not defined
+.endif
+.if !exists(${BLOGREEN}/build-pages-stylesheet.xsl)
+.error Bogus BLOGREEN vairable in env.
+.endif
+
+XSLT_PARAMS=    SRCDIR OBJDIR PUBDIR BLOGREEN
+
+XSLT_PARAMS+=	LC_MONETARY
+LC_MONETARY=	fr
+
+XMLLINT=	xmllint
+XMLLINT_FLAGS+=	--noout
+
+XSLTPROC=       xsltproc
+.for PARAM in ${XSLT_PARAMS}
+XSLTPROC_FLAGS+=--stringparam "${PARAM}" "${${PARAM}}"
+.endfor
+
+CLEANDIRS+=	${OBJDIR}
+CLEANDIRS+=	${PUBDIR}
+
+all:
+
+lint:
+	@cd ${SRCDIR} && for f in mapping.xml templates/*; do \
+	    echo "  LINT   $$f"; \
+	    ${XMLLINT} ${XMLLINT_FLAGS} ${SRCDIR}/$$f || exit 1; \
+	done
+
+################################################################################
+
+all: ${OBJDIR}/all-resources.xml
+
+${OBJDIR}/all-resources.xml: ${OBJDIR}/resource-aggregator.xsl ${SRCDIR}/resources.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} ${OBJDIR}/resource-aggregator.xsl ${SRCDIR}/resources.xml
+
+${OBJDIR}/resource-aggregator.xsl: ${BLOGREEN}/build-resource-aggregator.xsl ${SRCDIR}/mapping.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} ${BLOGREEN}/build-resource-aggregator.xsl ${SRCDIR}/mapping.xml
+
+################################################################################
+
+TEMPLATES_MAKEFILE=${SRCDIR}/Makefile.templates
+
+all: ${TEMPLATES_MAKEFILE}
+
+${TEMPLATES_MAKEFILE}: ${SRCDIR}/mapping.xml ${BLOGREEN}/build-templates-makefile.xsl
+	@${XSLTPROC} ${XSLTPROC_FLAGS} ${BLOGREEN}/build-templates-makefile.xsl ${SRCDIR}/mapping.xml
+	@(cd ${SRCDIR} && ${MAKE} ${.TARGETS})
+
+CLEANFILES+=	${TEMPLATES_MAKEFILE}
+
+.sinclude "${TEMPLATES_MAKEFILE}"
+
+################################################################################
+
+all: ${OBJDIR}/pages-stylesheet.xsl
+
+${OBJDIR}/pages-stylesheet.xsl: ${BLOGREEN}/build-pages-stylesheet.xsl ${SRCDIR}/mapping.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${OBJDIR}/pages-stylesheet.xsl ${BLOGREEN}/build-pages-stylesheet.xsl ${SRCDIR}/mapping.xml
+
+################################################################################
+
+all: ${OBJDIR}/pages-makefile.xsl
+
+${OBJDIR}/pages-makefile.xsl: ${BLOGREEN}/build-pages-makefile.xsl ${SRCDIR}/mapping.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${OBJDIR}/pages-makefile.xsl ${BLOGREEN}/build-pages-makefile.xsl ${SRCDIR}/mapping.xml
+
+################################################################################
+
+PAGES_MAKEFILES=${SRCDIR}/Makefile.pages
+
+all: ${PAGES_MAKEFILES}
+
+${PAGES_MAKEFILES}: ${OBJDIR}/pages-makefile.xsl ${OBJDIR}/all-resources.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} ${OBJDIR}/pages-makefile.xsl ${OBJDIR}/all-resources.xml
+	@(cd ${SRCDIR} && ${MAKE} ${.TARGETS})
+
+CLEANFILES+=	${PAGES_MAKEFILES}
+
+.sinclude "${PAGES_MAKEFILES}"
+
+################################################################################
+
+.include <bsd.obj.mk>

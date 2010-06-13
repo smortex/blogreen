@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vat>
+	<included lang="en">with taxes</included>
+	<included lang="fr">TTC</included>
+
+	<not-included lang="en">plus taxes</not-included>
+	<not-included lang="en">HT</not-included>
+</vat>
