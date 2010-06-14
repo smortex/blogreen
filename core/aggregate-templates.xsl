@@ -31,7 +31,7 @@
 		<bat:template>
 				<xsl:apply-templates select="node()|@*" mode="copy" />
 		</bat:template>
-		<xsl:if test="xhtml:html/xhtml:head/xhtml:meta[@name='extends']/@content">
+		<xsl:if test="xhtml:html/xhtml:head/xhtml:meta[@name='extends']">
 			<xsl:apply-templates select="document(concat($SRCDIR, '/templates/', xhtml:html/xhtml:head/xhtml:meta[@name='extends']/@content, '.xml'))" mode="process" />
 		</xsl:if>
 	</xsl:template>
