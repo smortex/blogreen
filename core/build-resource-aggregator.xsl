@@ -41,6 +41,7 @@
 </xsl:comment>
 			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources">
 				<axsl:include href="{$BLOGREEN}/build-utils.xsl" />
+				<axsl:include href="{$BLOGREEN}/resource-utils.xsl" />
 				<axsl:include href="{$BLOGREEN}/string-utils.xsl" />
 
 				<axsl:param name="filename" select="'{$OBJDIR}/all-resources.xml'" />
@@ -70,8 +71,11 @@
 					<axsl:template match="{@resource}">
 						<axsl:copy>
 							<axsl:attribute name="uri">
-								<axsl:call-template name="escape">
-									<axsl:with-param name="s" select="concat('/', {@path})" />
+								<axsl:call-template name="resource-construct-uri">
+									<axsl:with-param name="path" select="concat('/', {@path})" />
+									<axsl:with-param name="path-transform">
+										<xsl:value-of select="@path-transform" />
+									</axsl:with-param>
 								</axsl:call-template>
 							</axsl:attribute>
 							<!--

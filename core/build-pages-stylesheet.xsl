@@ -57,6 +57,7 @@
 			<axsl:include href="{$SRCDIR}/views.xsl" />
 
 			<axsl:include href="{$BLOGREEN}/build-utils.xsl" />
+			<axsl:include href="{$BLOGREEN}/resource-utils.xsl" />
 			<axsl:include href="{$BLOGREEN}/string-utils.xsl" />
 
 			<axsl:template match="/res:resources">
@@ -64,8 +65,11 @@
 					<axsl:for-each select="{@resource}">
 						<axsl:variable name="filename">
 							<axsl:value-of select="$OBJDIR" />
-							<axsl:call-template name="escape">
-								<axsl:with-param name="s" select="concat('/', {@path}, '/index.html')" />
+							<axsl:call-template name="resource-construct-uri">
+								<axsl:with-param name="path" select="concat('/', {@path}, '/index.html')" />
+								<axsl:with-param name="path-transform">
+									<xsl:value-of select="@path-transform" />
+								</axsl:with-param>
 							</axsl:call-template>
 						</axsl:variable>
 						<axsl:call-template name="progress">
