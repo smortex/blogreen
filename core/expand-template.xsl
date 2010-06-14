@@ -28,12 +28,11 @@
 		</xsl:call-template>
 
 		<xsl:document href="{$filename}" method="xml" indent="yes">
-			<axsl:stylesheet version="1.0">
+			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources">
 
 				<!--
 				<xsl:call-template name="do-not-edit" />
 				-->
-
 				<axsl:import href="{$BLOGREEN}/template-utils.xsl" />
 				<!--
 				XXX: Plugins
@@ -79,6 +78,20 @@
 					</axsl:element>
 				</axsl:template>
 
+				<!--
+				Generate default low-priority templates to warn the user about missing
+				content for placeholders.
+				-->
+				<xsl:for-each select="//bgn:placeholder[@name]">
+					<axsl:template match="res:*" mode="{@name}" priority="-10">
+						<axsl:call-template name="no-template-for-placeholder">
+							<axsl:with-param name="placeholder">
+								<xsl:value-of select="@name" />
+							</axsl:with-param>
+						</axsl:call-template>
+					</axsl:template>
+				</xsl:for-each>
+
 			</axsl:stylesheet>
 		</xsl:document>
 	</xsl:template>
@@ -108,14 +121,6 @@
 				The aggregated templates does not contains the contents of the
 				placeholder.  It will be computer when redering individual
 				pages, so copy it.  Some XSLT will replace it later.
-				-->
-				<!--
-				FIXME: Generate low-priority 'default' templates.
-				The current code will copy the text() value of the current
-				node without any warning.  Instead, we should produce some
-				informational information on what's did not match any template
-				(i.e. how to fix it) and produce some diagnostic on the
-				console.
 				-->
 				<axsl:apply-templates select="." mode="{$name}" />
 			</xsl:otherwise>
