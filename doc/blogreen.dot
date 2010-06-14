@@ -1,0 +1,88 @@
+/*
+ * Describe the global process of generating pages.
+ */
+digraph Blogreen {
+    compound=true;
+    fontname=inconsolata;
+    fontsize=14;
+    node[fontname=inconsolata, fontsize=10, margin=".4, .1", style=filled, fillcolor="#8ae234", color="#4e9a06"];
+    edge[fontname=inconsolata, fontsize=10];
+
+    node[shape=box]
+    res		[label="resources.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00"];
+    map		[label="mapping.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00"];
+
+    subgraph clusterPagesMakefile {
+	bpm		[label="build-pages-makefile.xsl"];
+	pm		[label="Makefile.pages"];
+    }
+
+    bps		[label="build-pages-stylesheet.xsl"];
+
+    subgraph clusterTemplatesMakefile {
+	btm		[label="build-templates-makefile.xsl"];
+	tm		[label="Makefile.templates"];
+    }
+
+    srctmplxml		[label="template/${name}.xml", shape=invhouse, fillcolor="#fcaf3e", color="#ce5c00"];
+
+    subgraph clusterTemplates {
+	label = "Templates generator";
+	shape=box;
+	objtmplxml	[label="template/${name}.xml", shape=ellipse];
+	objtmplxsl	[label="template/${name}.xsl"];
+
+	at		[label="aggregate-template.xsl"];
+	et		[label="expand-template.xsl"];
+
+	at -> objtmplxml [color="#ef2929"];
+	objtmplxml -> et;
+	et -> objtmplxsl [color="#ef2929"];
+    }
+	srctmplxml -> at;
+
+    subgraph clusterResources {
+	ra		[label="resources-aggregator.xsl"];
+	bra		[label="build-resources-aggregator.xsl"];
+	allres		[label="all-resources.xml", shape=ellipse];
+    }
+
+    subgraph clusterPages {
+	label = "Pages generator";
+	ps		[label="pages-stylesheets.xsl"];
+	index		[label="${page}.html"];
+	fp		[label="finish-pipeline.xsl"];
+	pindex		[label="${page}.html", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
+
+	index -> fp;
+    }
+
+    views		[label="views.xsl", fillcolor="#fcaf3e", color="#ce5c00"];
+
+    tm -> at [lhead=clusterTemplates];
+
+    map -> bra;
+    res -> ra;
+
+    map -> bps;
+    allres -> ps;
+    {views; objtmplxsl} -> ps [label=include, style=dotted];
+
+    map -> bpm;
+    allres -> pm;
+
+    map -> btm;
+
+    pm -> index [lhead=clusterPages];
+
+    edge[color="#ef2929"];
+    bra -> ra -> allres;
+    bps -> ps;
+    bpm -> pm;
+    btm -> tm;
+    ps -> index;
+    fp -> pindex;
+
+    fontsize=24;
+    label="Blogreen build-process overview ($Id$)";
+}
