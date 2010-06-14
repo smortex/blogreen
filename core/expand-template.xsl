@@ -64,6 +64,8 @@
 								</axsl:apply-templates>
 							</title>
 
+							<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
 							<link rel="stylesheet" type="text/css" media="all" href="/css/blogreen.css" />
 							<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
 							<link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
