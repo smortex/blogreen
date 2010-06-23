@@ -83,7 +83,7 @@
 				content for placeholders.
 				-->
 				<xsl:for-each select="//bgn:placeholder[@name]">
-					<axsl:template match="res:*" mode="{@name}" priority="-10">
+					<axsl:template match="*" mode="{@name}" priority="-10">
 						<axsl:call-template name="no-template-for-placeholder">
 							<axsl:with-param name="placeholder">
 								<xsl:value-of select="@name" />
