@@ -69,6 +69,11 @@
 							-->
 
 							<xsl:for-each select="map:map">
+								<axsl:if test="count({@resource}) = 0">
+									<axsl:call-template name="warning">
+										<axsl:with-param name="message">No resource match "<xsl:value-of select="@resource" />".</axsl:with-param>
+									</axsl:call-template>
+								</axsl:if>
 								<axsl:for-each select="{@resource}">
 									<axsl:variable name="filename">
 										<axsl:call-template name="resource-construct-uri">
