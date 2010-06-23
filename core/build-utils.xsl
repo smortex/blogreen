@@ -6,11 +6,13 @@
 		<xsl:param name="value" />
 
 		<xsl:if test="$value = ''">
-			<xsl:message terminate="yes">
-				<xsl:text>FATAL ERROR: The '</xsl:text>
-				<xsl:value-of select="$name" />
-				<xsl:text>' parameter cannot be empty.</xsl:text>
-			</xsl:message>
+			<xsl:call-template name="error">
+				<xsl:with-param name="message">
+					<xsl:text>The '</xsl:text>
+					<xsl:value-of select="$name" />
+					<xsl:text>' parameter cannot be empty.</xsl:text>
+				</xsl:with-param>
+			</xsl:call-template>
 		</xsl:if>
 	</xsl:template>
 
@@ -24,6 +26,20 @@
 		</xsl:if>
 		<xsl:message terminate="no">
 			<xsl:value-of select="concat('  GEN    ', substring-after($filename, $SRCDIR))" />
+		</xsl:message>
+	</xsl:template>
+
+	<xsl:template name="warning">
+		<xsl:param name="message" />
+		<xsl:message terminate="no">
+			<xsl:value-of select="concat('WARNING: ', $message)" />
+		</xsl:message>
+	</xsl:template>
+
+	<xsl:template name="error">
+		<xsl:param name="message" />
+		<xsl:message terminate="yes">
+			<xsl:value-of select="concat('FATAL ERROR: ', $message)" />
 		</xsl:message>
 	</xsl:template>
 
