@@ -39,7 +39,7 @@
 	- filename[="$OBJDIR/all-resources.xml"]
 	  Filename of the aggregated XML resource file.
 </xsl:comment>
-			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources">
+			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources" xmlns:hcal="http://microformats.org/profile/hcalendar">
 				<axsl:include href="{$BLOGREEN}/build-utils.xsl" />
 				<axsl:include href="{$BLOGREEN}/resource-utils.xsl" />
 				<axsl:include href="{$BLOGREEN}/string-utils.xsl" />
