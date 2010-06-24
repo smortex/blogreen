@@ -10,9 +10,9 @@
 	<xsl:template match="bgn:page-javascript">
 		<xsl:apply-imports />
 		<xsl:if test="//*[@rel and starts-with(@rel, 'lightbox')]">
-			<script type="text/javascript" src="/js/prototype.js"></script>
-			<script type="text/javascript" src="/js/scriptaculous.js?load=effects,builder"></script>
-			<script type="text/javascript" src="/js/lightbox.js"></script>
+			<script type="text/javascript" src="/js/prototype.js"><xsl:comment /></script>
+			<script type="text/javascript" src="/js/scriptaculous.js?load=effects,builder"><xsl:comment /></script>
+			<script type="text/javascript" src="/js/lightbox.js"><xsl:comment /></script>
 		</xsl:if>
 	</xsl:template>
 
