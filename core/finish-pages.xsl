@@ -16,7 +16,7 @@
 	Some XHTML elements can be self-closed so only copy their
 	attributes.
 	-->
-	<xsl:template match="xhtml:br|xhtml:hr|xhtml:img|xhtml:input">
+	<xsl:template match="xhtml:br|xhtml:hr|xhtml:img|xhtml:input|xhtml:link|xhtml:meta">
 		<xsl:copy>
 			<xsl:apply-templates select="@*" />
 		</xsl:copy>
