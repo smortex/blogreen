@@ -50,7 +50,7 @@
 	- makefile[="$SRCDIR/Makefile.pages"]
 		Name of the makefile to generate.
 </xsl:comment>
-				<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources" xmlns:hcal="http://microformats.org/profile/hcalendar">
+				<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources">
 					<axsl:include href="{$BLOGREEN}/build-utils.xsl" />
 					<axsl:include href="{$BLOGREEN}/resource-utils.xsl" />
 					<axsl:include href="{$BLOGREEN}/string-utils.xsl" />

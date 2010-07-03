@@ -34,7 +34,7 @@
 				DO NOT EDIT
 				XXX: Add some doc
 			</xsl:comment>
-			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources" xmlns:hcal="http://microformats.org/profile/hcalendar">
+			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources">
 
 			<!-- XXX import headers -->
 
