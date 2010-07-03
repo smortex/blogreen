@@ -1,12 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bgn="http://blogreen.org" version="1.0">
+<xsl:stylesheet xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:bgn="http://blogreen.org" version="1.0">
 
 	<!--
-	Identity template
+	Ensure XHTML elements have a start-tag and a end-tag unless they can
+	be self-closed (see bellow).
 	-->
 	<xsl:template match="@*|node()">
 		<xsl:copy>
 			<xsl:apply-templates select="@*|node()" />
+			<xsl:comment />
+		</xsl:copy>
+	</xsl:template>
+
+	<!--
+	Some XHTML elements can be self-closed so only copy their
+	attributes.
+	-->
+	<xsl:template match="xhtml:br|xhtml:hr|xhtml:img|xhtml:input">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" />
 		</xsl:copy>
 	</xsl:template>
 	
