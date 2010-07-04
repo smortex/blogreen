@@ -1,4 +1,5 @@
-
+# $Id$
+# Core
 
 SRCDIR?=	${.CURDIR}
 OBJDIR?=	${.CURDIR}/obj
@@ -8,16 +9,36 @@ PUBDIR?=	${.CURDIR}/pub
 # XXX: Build infrastructure should found this.
 # BLOGREEN should point to the 'core' directory where stylsheets are found.
 .if !defined(BLOGREEN)
-.error BLOGREEN not defined
+.  error BLOGREEN not defined
 .endif
 .if !exists(${BLOGREEN}/build-pages-stylesheet.xsl)
-.error Bogus BLOGREEN vairable in env.
+.  error Bogus BLOGREEN vairable in env.
 .endif
 
-XSLT_PARAMS=    SRCDIR OBJDIR PUBDIR BLOGREEN
+XSLT_PARAMS+=    SRCDIR OBJDIR PUBDIR BLOGREEN
 
-XSLT_PARAMS+=	LC_MONETARY
-LC_MONETARY=	fr
+# L10n
+
+LANG?=		C
+
+.if empty(LC_ALL)
+.  for l in LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MONETARY LC_MESSAGES
+.    if empty($l)
+$l=		${LANG:R}
+.    endif
+.  endfor
+.else
+LC_CTYPE=	${LC_ALL:R}
+LC_COLLATE=	${LC_ALL:R}
+LC_TIME=	${LC_ALL:R}
+LC_NUMERIC=	${LC_ALL:R}
+LC_MONETARY=	${LC_ALL:R}
+LC_MESSAGES=	${LC_ALL:R}
+.endif
+
+XSLT_PARAMS+=	LC_CTYPE LC_COLLATE LC_TIME LC_NUMERIC LC_MONETARY LC_MESSAGES
+
+# Programs
 
 XMLLINT=	xmllint
 XMLLINT_FLAGS+=	--noout
@@ -32,8 +53,19 @@ CLEANDIRS+=	${PUBDIR}
 
 all:
 
+display-locale:
+	@echo "LANG=${LANG:R}"
+	@echo "LC_CTYPE=${LC_CTYPE}"
+	@echo "LC_COLLATE=${LC_COLLATE}"
+	@echo "LC_TIME=${LC_TIME}"
+	@echo "LC_NUMERIC=${LC_NUMERIC}"
+	@echo "LC_MONETARY=${LC_MONETARY}"
+	@echo "LC_MESSAGES=${LC_MESSAGES}"
+	@echo "LC_ALL=${LC_ALL:R}"
+
+
 lint:
-	@cd ${SRCDIR} && for f in mapping.xml templates/*; do \
+	@cd ${SRCDIR} && for f in mapping.xml resources.xml templates/* views.xsl; do \
 	    echo "  LINT   $$f"; \
 	    ${XMLLINT} ${XMLLINT_FLAGS} ${SRCDIR}/$$f || exit 1; \
 	done
