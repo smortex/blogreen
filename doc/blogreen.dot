@@ -5,12 +5,12 @@ digraph Blogreen {
     compound=true;
     fontname=inconsolata;
     fontsize=14;
-    node[fontname=inconsolata, fontsize=10, margin=".4, .1", style=filled, fillcolor="#8ae234", color="#4e9a06"];
+    node[fontname=inconsolata, fontsize=10, margin=".2, .1", style=filled, fillcolor="#8ae234", color="#4e9a06"];
     edge[fontname=inconsolata, fontsize=10];
 
     node[shape=box]
-    res		[label="resources.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00"];
-    map		[label="mapping.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00"];
+    res		[label="resources.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Resources", tooltip="Resources Namespace"];
+    map		[label="mapping.xml",   shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Mapping",   tooltip="Mapping Namespace"];
 
     subgraph clusterPagesMakefile {
 	bpm		[label="build-pages-makefile.xsl"];
@@ -39,22 +39,37 @@ digraph Blogreen {
 	objtmplxml -> et;
 	et -> objtmplxsl [color="#ef2929"];
     }
-	srctmplxml -> at;
+    srctmplxml -> at;
+
+    plugins		[label="${plugins}.xsl"];
+    plugins -> objtmplxsl [label=import, style=dotted];
 
     subgraph clusterResources {
 	ra		[label="resources-aggregator.xsl"];
 	bra		[label="build-resources-aggregator.xsl"];
 	allres		[label="all-resources.xml", shape=ellipse];
+
+	label = "Resources aggregator";
     }
 
     subgraph clusterPages {
-	label = "Pages generator";
 	ps		[label="pages-stylesheets.xsl"];
-	index		[label="${page}.html"];
-	fp		[label="finish-pipeline.xsl"];
-	pindex		[label="${page}.html", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
+	index		[label="${page}.html", shape=invhouse];
 
-	index -> fp;
+	subgraph clusterFo {
+	    fp			[label="finish-pages.xsl"];
+	    filters		[label="${filters}.xsl"];
+	    fpp			[label="finish-page-pipeline.xsl"];
+	    pindex		[label="${page}.html", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
+
+	    { fp; filters } -> fpp [label="import", style=dotted];
+
+	    label = "Pages post-processing";
+	}
+
+	index -> fpp;
+
+	label = "Pages generator";
     }
 
     views		[label="views.xsl", fillcolor="#fcaf3e", color="#ce5c00"];
@@ -75,13 +90,14 @@ digraph Blogreen {
 
     pm -> index [lhead=clusterPages];
 
-    edge[color="#ef2929"];
-    bra -> ra -> allres;
-    bps -> ps;
-    bpm -> pm;
-    btm -> tm;
-    ps -> index;
-    fp -> pindex;
+    {
+	edge[color="#ef2929"];
+	bra -> ra -> allres;
+	bps -> ps -> index;
+	bpm -> pm;
+	btm -> tm;
+	fpp -> pindex;
+    }
 
     fontsize=24;
     label="Blogreen build-process overview ($Id$)";
