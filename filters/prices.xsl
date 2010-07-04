@@ -31,6 +31,11 @@
 
 	-->
 
+	<!--
+	FIXME: Read i18n is missing.
+	  - Add format strings in the -i18n.xml file and use them (see
+		  date-time fomatting).
+	-->
 	<xsl:param name="currency" select="'€'" />
 	<xsl:param name="LC_MONETARY" select="'C'" />
 
@@ -39,23 +44,23 @@
 
 	<xsl:template match="bgn:price">
 		<xsl:choose>
-			<xsl:when test="$LC_MONETARY = 'en'">
+			<xsl:when test="starts-with($LC_MONETARY, 'en')">
 				<xsl:variable name="format">
 					<xsl:text>###,###</xsl:text>
 					<xsl:if test="contains(text(), '.')">
 						<xsl:text>.00</xsl:text>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:value-of select="concat($currency, ' ', format-number(text(), $format, $LC_MONETARY))" />
+				<xsl:value-of select="concat($currency, ' ', format-number(text(), $format, substring($LC_MONETARY, 1, 2)))" />
 			</xsl:when>
-			<xsl:when test="$LC_MONETARY = 'fr'">
+			<xsl:when test="starts-with($LC_MONETARY, 'fr')">
 				<xsl:variable name="format">
 					<xsl:value-of select="concat('###',$unbreakable-space,'###')" />
 					<xsl:if test="contains(text(), '.')">
 						<xsl:text>,00</xsl:text>
 					</xsl:if>
 				</xsl:variable>
-				<xsl:value-of select="concat(format-number(text(), $format, $LC_MONETARY),' ', $currency)" />
+				<xsl:value-of select="concat(format-number(text(), $format, substring($LC_MONETARY, 1, 2)),' ', $currency)" />
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:message terminate="yes">ERROR: Don't know how to format prices for LC_MONETARY="<xsl:value-of select="$LC_MONETARY" />".</xsl:message>
@@ -65,10 +70,10 @@
 				<xsl:value-of select="$unbreakable-space" />
 				<xsl:choose>
 					<xsl:when test="@vat = 'included'">
-						<xsl:value-of select="document('prices-i18n.xml')/vat/included[@lang = $LC_MONETARY]" />
+						<xsl:value-of select="document('prices-i18n.xml')/i18n/prices[lang = $LC_MONETARY]/vat-included" />
 					</xsl:when>
 					<xsl:when test="@vat = 'not-included'">
-						<xsl:value-of select="document('prices-i18n.xml')/vat/not-included[@lang = $LC_MONETARY]" />
+						<xsl:value-of select="document('prices-i18n.xml')/i18n/prices[lang = $LC_MONETARY]/vat-not-included" />
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:message terminate="yes">ERROR: Valid VAT values are 'included' and 'not-included' (found <xsl:value-of select="@vat" />).</xsl:message>

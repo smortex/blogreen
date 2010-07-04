@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<vat>
-	<included lang="en">with taxes</included>
-	<included lang="fr">TTC</included>
+<i18n>
+    <prices>
+	<lang>C</lang>
+	<lang>en</lang>
+	<lang>en_GB</lang>
+	<lang>en_US</lang>
 
-	<not-included lang="en">plus taxes</not-included>
-	<not-included lang="en">HT</not-included>
-</vat>
+	<vat-included>with taxes</vat-included>
+	<vat-not-included>plus taxes</vat-not-included>
+    </prices>
+    <prices>
+	<lang>fr</lang>
+	<lang>fr_FR</lang>
+
+	<vat-included>TTC</vat-included>
+	<vat-not-included>HT</vat-not-included>
+    </prices>
+</i18n>
