@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xmlns:bgn="http://blogreen.org" version="1.0">
 
 	<xsl:import href="finish-pages.xsl" />
 
@@ -40,6 +40,14 @@
 	<xsl:template match="@*|node()">
 		<xsl:if test="not((@class = 'drop-if-empty') and not (node()) or name(.) = 'class' and . = 'drop-if-empty' )">
 			<xsl:apply-imports />
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="bgn:body-onload">
+		<xsl:variable name="onload-list"><xsl:apply-imports /></xsl:variable>
+
+		<xsl:if test="$onload-list != ''">
+			<xsl:attribute name="onload">javascript: <xsl:value-of select="$onload-list" /></xsl:attribute>
 		</xsl:if>
 	</xsl:template>
 

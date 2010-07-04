@@ -70,7 +70,10 @@
 							<bgn:page-javascript />
 						</head>
 
-						<xsl:apply-templates select="xhtml:body" mode="copy" />
+						<axsl:element name="body" namespace="http://www.w3.org/1999/xhtml">
+							<bgn:body-onload />
+							<xsl:apply-templates select="xhtml:body/*" mode="copy" />
+						</axsl:element>
 
 					</axsl:element>
 				</axsl:template>
