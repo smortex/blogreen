@@ -3,6 +3,7 @@
 
 	<xsl:import href="finish-pages.xsl" />
 
+	<xsl:import href="../filters/date-time.xsl" />
 	<xsl:import href="../filters/lightbox2.xsl" />
 	<xsl:import href="../filters/prices.xsl" />
 

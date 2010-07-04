@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<i18n>
+	<date-time>
+		<lang>C</lang>
+		<lang>en</lang>
+		<lang>en_GB</lang>
+		<lang>en_US</lang>
+		<format>%B %e, %Y</format>
+		<month>January</month>
+		<month>February</month>
+		<month>March</month>
+		<month>April</month>
+		<month>May</month>
+		<month>June</month>
+		<month>July</month>
+		<month>August</month>
+		<month>September</month>
+		<month>October</month>
+		<month>November</month>
+		<month>December</month>
+	</date-time>
+	<date-time>
+		<lang>fr</lang>
+		<lang>fr_FR</lang>
+		<format>%e %B %Y</format>
+		<month>janvier</month>
+		<month>février</month>
+		<month>mars</month>
+		<month>avril</month>
+		<month>mai</month>
+		<month>juin</month>
+		<month>juillet</month>
+		<month>août</month>
+		<month>septembre</month>
+		<month>octobre</month>
+		<month>novembre</month>
+		<month>décembre</month>
+	</date-time>
+</i18n>
