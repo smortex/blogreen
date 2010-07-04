@@ -3,8 +3,8 @@
 
 	<xsl:import href="finish-pages.xsl" />
 
-	<xsl:import href="../plugins/lightbox2.xsl" />
-	<xsl:import href="../plugins/prices.xsl" />
+	<xsl:import href="../filters/lightbox2.xsl" />
+	<xsl:import href="../filters/prices.xsl" />
 
 	<xsl:include href="build-utils.xsl" />
 

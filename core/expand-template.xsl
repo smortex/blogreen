@@ -38,10 +38,7 @@
 				XXX: Plugins
 				-->
 				<axsl:import href="{$BLOGREEN}/../plugins/breadcrumbs.xsl" />
-				<axsl:import href="{$BLOGREEN}/../plugins/prices.xsl" />
 				<axsl:import href="{$BLOGREEN}/../plugins/main-navigation.xsl" />
-
-				<axsl:import href="{$BLOGREEN}/../plugins/lightbox2.xsl" />
 
 				<axsl:param name="output-language">en</axsl:param>
 

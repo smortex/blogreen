@@ -32,7 +32,7 @@
 	-->
 
 	<xsl:param name="currency" select="'€'" />
-	<xsl:param name="LC_MONETARY" />
+	<xsl:param name="LC_MONETARY" select="'C'" />
 
 	<xsl:decimal-format name="en" decimal-separator="." grouping-separator="," />
 	<xsl:decimal-format name="fr" decimal-separator="," grouping-separator="&#160;" />
@@ -65,10 +65,10 @@
 				<xsl:value-of select="$unbreakable-space" />
 				<xsl:choose>
 					<xsl:when test="@vat = 'included'">
-						<xsl:value-of select="document('vat.xml')/vat/included[@lang = $LC_MONETARY]" />
+						<xsl:value-of select="document('prices-i18n.xml')/vat/included[@lang = $LC_MONETARY]" />
 					</xsl:when>
 					<xsl:when test="@vat = 'not-included'">
-						<xsl:value-of select="document('vat.xml')/vat/not-included[@lang = $LC_MONETARY]" />
+						<xsl:value-of select="document('prices-i18n.xml')/vat/not-included[@lang = $LC_MONETARY]" />
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:message terminate="yes">ERROR: Valid VAT values are 'included' and 'not-included' (found <xsl:value-of select="@vat" />).</xsl:message>
