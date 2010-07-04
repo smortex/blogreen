@@ -88,6 +88,11 @@
 				</xsl:for-each>
 			</axsl:template>
 
+			<axsl:template match="res:ref" mode="copy">
+				<axsl:call-template name="resource-ref-by-id">
+					<axsl:with-param name="resource-id" select="@resource" />
+				</axsl:call-template>
+			</axsl:template>
 
 		</axsl:stylesheet>
 	</xsl:document>
