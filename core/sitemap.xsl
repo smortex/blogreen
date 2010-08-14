@@ -28,7 +28,16 @@
 							<xsl:value-of select="concat($root-uri, @uri)" />
 						</loc>
 						<changefreq>monthly</changefreq>
-						<priority>1</priority>
+						<priority>
+							<xsl:choose>
+								<xsl:when test="@priority">
+									<xsl:value-of select="@priority" />
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:text>0.5</xsl:text>
+								</xsl:otherwise>
+							</xsl:choose>
+						</priority>
 					</url>
 				</xsl:for-each>
 			</urlset>
