@@ -11,6 +11,7 @@ digraph Blogreen {
     node[shape=box]
     res		[label="resources.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Resources", tooltip="Resources Namespace"];
     map		[label="mapping.xml",   shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Mapping",   tooltip="Mapping Namespace"];
+    config	[label="config.xml",    shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Config",    tooltip="Config Namespace"];
 
     subgraph clusterPagesMakefile {
 	bpm		[label="build-pages-makefile.xsl"];
@@ -90,6 +91,15 @@ digraph Blogreen {
 
     pm -> index [lhead=clusterPages];
 
+    rs	[label="robots-txt.xsl"];
+    r	[label="robots.txt", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
+    ss	[label="sitemap.xsl"];
+    s	[label="sitemap.xml", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
+    config -> rs;
+    allres -> rs;
+    config -> ss;
+    allres -> ss;
+
     {
 	edge[color="#ef2929"];
 	bra -> ra -> allres;
@@ -97,6 +107,8 @@ digraph Blogreen {
 	bpm -> pm;
 	btm -> tm;
 	fpp -> pindex;
+	rs -> r;
+	ss -> s;
     }
 
     fontsize=24;
