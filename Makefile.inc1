@@ -124,6 +124,13 @@ CLEANFILES+=	${PAGES_MAKEFILES}
 
 ################################################################################
 
+all: ${PUBDIR}/robots.txt
+
+${PUBDIR}/robots.txt: ${OBJDIR}/all-resources.xml ${BLOGREEN}/robots-txt.xsl ${SRCDIR}/config.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${.TARGET} ${BLOGREEN}/robots-txt.xsl ${OBJDIR}/all-resources.xml
+
+################################################################################
+
 all: ${PUBDIR}/sitemap.xml
 
 ${PUBDIR}/sitemap.xml: ${OBJDIR}/all-resources.xml ${BLOGREEN}/sitemap.xsl ${SRCDIR}/config.xml
