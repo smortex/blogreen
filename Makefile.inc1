@@ -124,4 +124,9 @@ CLEANFILES+=	${PAGES_MAKEFILES}
 
 ################################################################################
 
+all: ${PUBDIR}/sitemap.xml
+
+${PUBDIR}/sitemap.xml: ${OBJDIR}/all-resources.xml ${BLOGREEN}/sitemap.xsl ${SRCDIR}/config.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${.TARGET} ${BLOGREEN}/sitemap.xsl ${OBJDIR}/all-resources.xml
+
 .include <bsd.obj.mk>
