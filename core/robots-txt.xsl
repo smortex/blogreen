@@ -22,9 +22,15 @@
 		</xsl:call-template>
 
 		<xsl:document href="{$filename}" method="text">
+
 			<xsl:text>Sitemap: </xsl:text>
 			<xsl:value-of select="concat($root-uri, '/sitemap.xml', $new-line)" />
 
+			<xsl:text>
+User-agent: *
+Allow: /
+
+</xsl:text>
 			<!--
 			TODO: Handle Disallows
 			-->
