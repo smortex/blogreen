@@ -39,6 +39,7 @@
 				-->
 				<axsl:import href="{$BLOGREEN}/../plugins/breadcrumbs.xsl" />
 				<axsl:import href="{$BLOGREEN}/../plugins/main-navigation.xsl" />
+				<axsl:import href="{$BLOGREEN}/../plugins/osmose-newsletter.xsl" />
 
 				<axsl:param name="output-language">en</axsl:param>
 
@@ -66,6 +67,8 @@
 							<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
 							<link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
 							<bgn:page-css />
+
+							<link rel="shortcut icon" type="images/x-icon" href="/favicon" />
 
 							<bgn:page-javascript />
 						</head>

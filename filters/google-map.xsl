@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bgn="http://blogreen.org" xmlns:hcard="http://microformats.org/profile/hcard" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bgn="http://blogreen.org" xmlns:hcard="http://microformats.org/profile/hcard" xmlns:c="http://blogreen.org/TR/Config" version="1.0">
 
 	<!--
 	TODO: Cleanup required:
@@ -16,7 +16,7 @@
 			-->
 			<xsl:element name="script">
 				<xsl:attribute name="type">text/javascript</xsl:attribute>
-				<xsl:attribute name="src">http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<xsl:value-of select="'ABQIAAAAOJwILudhgqQIVD2XSjGdsxQTAK8myc1BOYGDdZVDdt4JA65VsRSncpDRHNsJA_7F-kFuQe-bvt5dfg'" />&amp;hl=<xsl:value-of select="$LC_MESSAGES" /></xsl:attribute>
+				<xsl:attribute name="src">http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=<xsl:value-of select="document(concat($SRCDIR, '/config.xml'))/c:config/c:GoogleMapAPIKeyV2" />&amp;hl=<xsl:value-of select="$LC_MESSAGES" /></xsl:attribute>
 				<xsl:comment />
 			</xsl:element>
 			<script type="text/javascript"><xsl:comment><![CDATA[
