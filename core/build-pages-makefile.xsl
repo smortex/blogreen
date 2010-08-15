@@ -67,12 +67,6 @@
 							Generated pages don't have view they depend on in their
 							dependency list.
 							-->
-							<axsl:variable name="filenamex">index.html</axsl:variable>
-									<axsl:value-of select="concat('all: ${{PUBDIR}}/', $filenamex, $new-line)" />
-									<axsl:value-of select="concat('${{OBJDIR}}/', $filenamex, ': ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', ' ${{OBJDIR}}/{$templates-directory}/default.xsl', $new-line)" />
-									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
-									<axsl:value-of select="concat('${{PUBDIR}}/', $filenamex, ': ', '${{OBJDIR}}/', $filenamex, $new-line)" />
-									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}/', $filenamex, ' ${{BLOGREEN}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filenamex, $new-line)" />
 
 							<xsl:for-each select="map:map">
 								<axsl:if test="count({@resource}) = 0">

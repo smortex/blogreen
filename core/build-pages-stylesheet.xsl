@@ -61,16 +61,6 @@
 			<axsl:include href="{$BLOGREEN}/string-utils.xsl" />
 
 			<axsl:template match="/res:resources">
-				<axsl:variable name="filenamex">
-					<axsl:value-of select="concat($OBJDIR, '/index.html')" />
-				</axsl:variable>
-				<axsl:call-template name="progress">
-					<axsl:with-param name="filename" select="$filenamex" />
-				</axsl:call-template>
-				<axsl:document href="{{$filenamex}}">
-					<axsl:call-template name="default" />
-				</axsl:document>
-
 				<xsl:for-each select="map:map">
 					<axsl:for-each select="{@resource}">
 						<axsl:variable name="filename">

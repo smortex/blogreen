@@ -3,16 +3,10 @@
 
 	<xsl:import href="finish-pages.xsl" />
 
-	<!--
-TODO: Import a generated file importing this stylesheets through a
-user-defined stylsheet to let him a change to override some templates.
-	-->
 	<xsl:import href="../filters/date-time.xsl" />
 	<xsl:import href="../filters/google-map.xsl" />
 	<xsl:import href="../filters/lightbox2.xsl" />
 	<xsl:import href="../filters/prices.xsl" />
-	<xsl:import href="../filters/t-shirt-size.xsl" />
-	<xsl:import href="../filters/main-navigation.xsl" />
 
 	<xsl:include href="build-utils.xsl" />
 
@@ -31,7 +25,7 @@ user-defined stylsheet to let him a change to override some templates.
 				<xsl:with-param name="filename" select="$filename" />
 			</xsl:call-template>
 
-			<xsl:document href="{$filename}" method="xml" indent="no" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
+			<xsl:document href="{$filename}" method="xml" indent="yes" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
 				<xsl:copy>
 					<xsl:apply-templates select="*" />
 				</xsl:copy>
