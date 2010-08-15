@@ -9,9 +9,15 @@ digraph Blogreen {
     edge[fontname=inconsolata, fontsize=10];
 
     node[shape=box]
-    res		[label="resources.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Resources", tooltip="Resources Namespace"];
-    map		[label="mapping.xml",   shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Mapping",   tooltip="Mapping Namespace"];
-    config	[label="config.xml",    shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Config",    tooltip="Config Namespace"];
+
+    {
+	rank=same;
+	res		[label="resources.xml", shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Resources", tooltip="Resources Namespace"];
+	map		[label="mapping.xml",   shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Mapping",   tooltip="Mapping Namespace"];
+	config	[label="config.xml",    shape=ellipse, fillcolor="#fcaf3e", color="#ce5c00", URL="http://blogreen.org/TR/Config",    tooltip="Config Namespace"];
+	views	[label="views.xsl",			fillcolor="#fcaf3e", color="#ce5c00"];
+	srctmplxml		[label="template/${name}.xml", shape=invhouse, fillcolor="#fcaf3e", color="#ce5c00"];
+    }
 
     subgraph clusterPagesMakefile {
 	bpm		[label="build-pages-makefile.xsl"];
@@ -25,7 +31,6 @@ digraph Blogreen {
 	tm		[label="Makefile.templates"];
     }
 
-    srctmplxml		[label="template/${name}.xml", shape=invhouse, fillcolor="#fcaf3e", color="#ce5c00"];
 
     subgraph clusterTemplates {
 	label = "Templates generator";
@@ -61,7 +66,6 @@ digraph Blogreen {
 	    fp			[label="finish-pages.xsl"];
 	    filters		[label="${filters}.xsl"];
 	    fpp			[label="finish-page-pipeline.xsl"];
-	    pindex		[label="${page}.html", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
 
 	    { fp; filters } -> fpp [label="import", style=dotted];
 
@@ -73,7 +77,6 @@ digraph Blogreen {
 	label = "Pages generator";
     }
 
-    views		[label="views.xsl", fillcolor="#fcaf3e", color="#ce5c00"];
 
     tm -> at [lhead=clusterTemplates];
 
@@ -109,6 +112,13 @@ digraph Blogreen {
 	fpp -> pindex;
 	rs -> r;
 	ss -> s;
+    }
+
+    {
+	rank=same;
+	s;
+	r;
+	pindex		[label="${page}.html", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
     }
 
     fontsize=24;
