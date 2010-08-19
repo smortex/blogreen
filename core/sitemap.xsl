@@ -30,8 +30,8 @@
 						<changefreq>monthly</changefreq>
 						<priority>
 							<xsl:choose>
-								<xsl:when test="@priority">
-									<xsl:value-of select="@priority" />
+								<xsl:when test="@sm:priority">
+									<xsl:value-of select="@sm:priority" />
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:text>0.5</xsl:text>
