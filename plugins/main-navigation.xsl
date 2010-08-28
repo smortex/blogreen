@@ -19,7 +19,6 @@
 					<bgn:main-navigation-separator />
 			</xsl:if>
 			<xsl:for-each select="/res:resources/res:*[@uri]">
-				<xsl:sort data-type="number" select="@order" />
 				<xsl:element name="a">
 					<xsl:attribute name="href">
 						<xsl:value-of select="@uri" />
