@@ -16,7 +16,7 @@
 
 	<xsl:param name="filename" select="concat($OBJDIR, '/resource-aggregator.xsl')" />
 
-	<xsl:template match="/map:mapping">
+	<xsl:template match="/">
 		<xsl:call-template name="check-required-parameter">
 			<xsl:with-param name="name" select="'filename'" />
 			<xsl:with-param name="value" select="$filename" />
@@ -65,32 +65,13 @@
 				</axsl:template>
 
 				<axsl:template match="res:import">
+					<axsl:if test="not(document(@href))">
+						<axsl:message terminate="yes">PLOP</axsl:message>
+					</axsl:if>
 					<axsl:apply-templates select="document(@href)" />
 				</axsl:template>
 
-				<xsl:for-each select="map:map">
-					<axsl:template match="{@resource}">
-						<axsl:copy>
-							<axsl:attribute name="uri">
-								<axsl:call-template name="resource-construct-uri">
-									<axsl:with-param name="path" select="concat('/', {@path})" />
-									<axsl:with-param name="path-transform">
-										<xsl:value-of select="@path-transform" />
-									</axsl:with-param>
-								</axsl:call-template>
-							</axsl:attribute>
-							<!--
-							Store the item position: the mappings/map items order
-							may be used by some plugins (e.g. main-navigation).
-							-->
-							<axsl:attribute name="order">
-								<xsl:value-of select="position()" />
-							</axsl:attribute>
-							<axsl:apply-templates select="node()|@*" />
-						</axsl:copy>
-					</axsl:template>
-
-				</xsl:for-each>
+				<xsl:apply-templates />
 
 				<!-- If no map is available, copy verbatim -->
 				<axsl:template match="node()|@*">
@@ -101,5 +82,53 @@
 
 			</axsl:stylesheet>
 		</xsl:document>
+	</xsl:template>
+
+
+	<xsl:template match="map:map">
+		<xsl:param name="root-uri" />
+
+		<xsl:variable name="resource-uri">
+			<xsl:choose>
+				<xsl:when test="$root-uri">
+					<xsl:text>concat(</xsl:text>
+					<xsl:value-of select="$root-uri" />
+					<xsl:if test="@path">
+						<xsl:text>, '/', </xsl:text>
+						<xsl:value-of select="@path" />
+					</xsl:if>
+					<xsl:text>)</xsl:text>
+				</xsl:when>
+				<xsl:when test="@path">
+					<xsl:value-of select="@path" />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:text>''</xsl:text>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+
+		<axsl:template match="{@resource}">
+			<axsl:copy>
+				<axsl:attribute name="uri">
+					<axsl:call-template name="resource-construct-uri">
+						<axsl:with-param name="path" select="{$resource-uri}" />
+						<axsl:with-param name="path-transform">
+							<xsl:value-of select="@path-transform" />
+						</axsl:with-param>
+					</axsl:call-template>
+
+				</axsl:attribute>
+				<axsl:attribute name="order">
+					<axsl:value-of select="position()" />
+				</axsl:attribute>
+
+				<axsl:apply-templates select="@*|node()" />
+			</axsl:copy>
+		</axsl:template>
+
+		<xsl:apply-templates>
+			<xsl:with-param name="root-uri" select="$resource-uri" />
+		</xsl:apply-templates>
 	</xsl:template>
 </xsl:stylesheet>

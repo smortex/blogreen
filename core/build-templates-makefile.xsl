@@ -30,7 +30,7 @@
 	<xsl:param name="aggregate-stylesheet" select="'${BLOGREEN}/aggregate-templates.xsl'" />
 	<xsl:param name="expand-stylesheet" select="'${BLOGREEN}/expand-template.xsl'" />
 
-	<xsl:template match="/map:mapping">
+	<xsl:template match="/">
 
 		<xsl:call-template name="check-required-parameter">
 			<xsl:with-param name="name" select="'makefile'" />
@@ -43,25 +43,34 @@
 
 		<xsl:document href="{$makefile}" method="text">
 			<xsl:value-of select="concat('# Templates rules', $new-line)" />
-			<xsl:for-each select="map:map">
+			<xsl:apply-templates />
+			<xsl:value-of select="concat('# End of templates rules', $new-line)" />
+		</xsl:document>
+	</xsl:template>
+
+	<xsl:template match="map:map">
 				<xsl:variable name="template" select="@template" />
 
-				<xsl:if test="count(preceding-sibling::map:map[@template = $template]) = 0">
+				<xsl:if test="count(preceding::map:map[@template = $template]) + count(ancestor::map:map[@template = $template]) = 0">
 					<xsl:variable name="source" select="concat('${SRCDIR}/', $templates-directory, '/', @template, '.xml')" />
 					<xsl:variable name="target-no-ext" select="concat('${OBJDIR}/', $templates-directory, '/', @template)" />
 					<xsl:variable name="target-xml" select="concat($target-no-ext, '.xml')" />
 					<xsl:variable name="target-xsl" select="concat($target-no-ext, '.xsl')" />
+
+					<xsl:value-of select="concat('# ', $template, $new-line)" />
 
 					<xsl:value-of select="concat('all: ', $target-xsl, $new-line)" />
 					<xsl:value-of select="concat($target-xml, ': ', $source, ' ', $aggregate-stylesheet, ' ', $makefile, $new-line)" />
 					<xsl:value-of select="concat('&#x09;@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ', $target-xml, ' ', $aggregate-stylesheet, ' ', $source, $new-line)" />
 
 					<xsl:value-of select="concat($target-xsl, ': ', $target-xml, ' ', $expand-stylesheet, ' ', $makefile, $new-line)" />
-					<xsl:value-of select="concat('&#x09;@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ', $target-xsl, ' ', $expand-stylesheet, ' ', $target-xml, $new-line)" />
+					<xsl:value-of select="concat('&#x09;@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ', $target-xsl, ' ', $expand-stylesheet, ' ', $target-xml, $new-line, $new-line)" />
 				</xsl:if>
-			</xsl:for-each>
-			<xsl:value-of select="concat('# End of templates rules', $new-line)" />
-		</xsl:document>
+
+		<!-- Process child maps -->
+		<xsl:apply-templates />
 	</xsl:template>
+
+	<xsl:template match="*|text()" />
 
 </xsl:stylesheet>

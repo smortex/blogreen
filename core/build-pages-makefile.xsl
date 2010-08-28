@@ -21,7 +21,7 @@
 		<xsl:param name="templates-directory" select="'templates'" />
 		<xsl:param name="filename" select="concat($OBJDIR, '/pages-makefile.xsl')" />
 
-		<xsl:template match="/map:mapping">
+		<xsl:template match="/">
 
 			<xsl:call-template name="check-required-parameter">
 				<xsl:with-param name="name" select="'filename'" />
@@ -57,7 +57,7 @@
 					<axsl:param name="stylesheet" select="'${{OBJDIR}}/pages-stylesheet.xsl'" />
 					<axsl:param name="templates-directory" select="{$templates-directory}" />
 					<axsl:param name="makefile" select="concat($SRCDIR,'/Makefile.pages')" />
-					<axsl:template match="/res:resources">
+					<axsl:template match="/">
 						<axsl:call-template name="progress">
 							<axsl:with-param name="filename" select="$makefile" />
 						</axsl:call-template>
@@ -68,32 +68,30 @@
 							dependency list.
 							-->
 
-							<xsl:for-each select="map:map">
-								<axsl:if test="count({@resource}) = 0">
-									<axsl:call-template name="warning">
-										<axsl:with-param name="message">No resource match "<xsl:value-of select="@resource" />".</axsl:with-param>
-									</axsl:call-template>
-								</axsl:if>
-								<axsl:for-each select="{@resource}">
-									<axsl:variable name="filename">
-										<axsl:call-template name="resource-construct-uri">
-											<axsl:with-param name="path" select="concat({@path}, '/index.html')" />
-											<axsl:with-param name="path-transform">
-												<xsl:value-of select="@path-transform" />
-											</axsl:with-param>
-										</axsl:call-template>
-									</axsl:variable>
+							<axsl:apply-templates />
+						</axsl:document>
+					</axsl:template>
+					<xsl:apply-templates />
+					<axsl:template match="*|text()" />
+				</axsl:stylesheet>
+			</xsl:document>
+		</xsl:template>
+
+		<xsl:template match="map:map">
+			<axsl:template match="{@resource}">
+				<axsl:variable name="filename">
+					<axsl:value-of select="concat(@uri, '/index.html')" />
+				</axsl:variable>
+
+
 									<axsl:value-of select="concat('all: ${{PUBDIR}}/', $filename, $new-line)" />
 									<axsl:value-of select="concat('${{OBJDIR}}/', $filename, ': ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', ' ${{OBJDIR}}/{$templates-directory}/{@template}.xsl', $new-line)" />
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
 									<axsl:value-of select="concat('${{PUBDIR}}/', $filename, ': ', '${{OBJDIR}}/', $filename, $new-line)" />
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}/', $filename, ' ${{BLOGREEN}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
-								</axsl:for-each>
-							</xsl:for-each>
-						</axsl:document>
-					</axsl:template>
-				</axsl:stylesheet>
-			</xsl:document>
-		</xsl:template>
+				<axsl:apply-templates />
+			</axsl:template>
 
+			<xsl:apply-templates />
+		</xsl:template>
 	</xsl:stylesheet>

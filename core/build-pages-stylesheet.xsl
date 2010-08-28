@@ -18,7 +18,7 @@
 
 	<xsl:param name="filename" />
 
-	<xsl:template match="/map:mapping">
+	<xsl:template match="/">
 
 		<xsl:call-template name="check-required-parameter">
 			<xsl:with-param name="name" select="'filename'" />
@@ -39,9 +39,9 @@
 			<!-- XXX import headers -->
 
 			<!-- import templates -->
-			<xsl:for-each select="map:map">
+			<xsl:for-each select="//map:map">
 				<xsl:variable name="template" select="@template" />
-				<xsl:if test="count(preceding-sibling::map:map[@template=$template]) = 0">
+				<xsl:if test="count(preceding::map:map[@template=$template]) + count(ancestor::map:map[@template = $template]) = 0">
 					<!--
 					FIXME: Static reference to '/templates/'.
 					-->
@@ -60,42 +60,40 @@
 			<axsl:include href="{$BLOGREEN}/resource-utils.xsl" />
 			<axsl:include href="{$BLOGREEN}/string-utils.xsl" />
 
-			<axsl:template match="/res:resources">
-				<xsl:for-each select="map:map">
-					<axsl:for-each select="{@resource}">
-						<axsl:variable name="filename">
-							<axsl:value-of select="$OBJDIR" />
-							<axsl:call-template name="resource-construct-uri">
-								<axsl:with-param name="path" select="concat('/', {@path}, '/index.html')" />
-								<axsl:with-param name="path-transform">
-									<xsl:value-of select="@path-transform" />
-								</axsl:with-param>
-							</axsl:call-template>
-						</axsl:variable>
-						<axsl:call-template name="progress">
-							<axsl:with-param name="filename" select="$filename" />
-						</axsl:call-template>
-						<axsl:document href="{{$filename}}">
-							<axsl:call-template name="{@template}">
-								<xsl:if test="@context">
-									<axsl:with-param name="context">
-										<xsl:value-of select="@context" />
-									</axsl:with-param>
-								</xsl:if>
-							</axsl:call-template>
-						</axsl:document>
-					</axsl:for-each>
-				</xsl:for-each>
-			</axsl:template>
-
 			<axsl:template match="res:ref" mode="copy">
 				<axsl:call-template name="resource-ref-by-id">
 					<axsl:with-param name="resource-id" select="@resource" />
 				</axsl:call-template>
 			</axsl:template>
 
+				<xsl:apply-templates />
+
+				<axsl:template match="*|text()">
+				</axsl:template>
+
 		</axsl:stylesheet>
 	</xsl:document>
 	</xsl:template>
 
+	<xsl:template match="map:map">
+		<axsl:template match="{@resource}">
+			<axsl:variable name="filename">
+				<axsl:value-of select="concat($OBJDIR, @uri, '/index.html')" />
+			</axsl:variable>
+			<axsl:call-template name="progress">
+				<axsl:with-param name="filename" select="$filename" />
+			</axsl:call-template>
+			<axsl:document href="{{$filename}}">
+				<axsl:call-template name="{@template}">
+					<xsl:if test="@context">
+						<axsl:with-param name="context">
+							<xsl:value-of select="@context" />
+						</axsl:with-param>
+					</xsl:if>
+				</axsl:call-template>
+			</axsl:document>
+			<axsl:apply-templates />
+		</axsl:template>
+		<xsl:apply-templates />
+	</xsl:template>
 </xsl:stylesheet>
