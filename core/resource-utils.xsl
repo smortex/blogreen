@@ -25,6 +25,8 @@
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
+		<!-- TODO Be less systematic -->
+		<xsl:text>/</xsl:text>
 
 	</xsl:template>
 
