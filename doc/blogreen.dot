@@ -45,7 +45,7 @@ digraph Blogreen {
 	objtmplxml -> et;
 	et -> objtmplxsl [color="#ef2929"];
     }
-    srctmplxml -> at;
+    srctmplxml -> at [label="document()", style=dashed];
 
     plugins		[label="${plugins}.xsl"];
     plugins -> objtmplxsl [label=import, style=dotted];
@@ -82,6 +82,7 @@ digraph Blogreen {
 
     map -> bra;
     res -> ra;
+    res -> ra [label="document()", style=dashed];
 
     map -> bps;
     allres -> ps;
@@ -98,9 +99,9 @@ digraph Blogreen {
     r	[label="robots.txt", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
     ss	[label="sitemap.xsl"];
     s	[label="sitemap.xml", shape=invhouse, fillcolor="#729fcf", color="#204a87"];
-    config -> rs;
+    config -> rs [label="document()", style=dashed];
     allres -> rs;
-    config -> ss;
+    config -> ss [label="document()", style=dashed];
     allres -> ss;
 
     {
