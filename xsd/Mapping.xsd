@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:set noet sw=4 ts=4: -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://blogreen.org/TR/Mapping" elementFormDefault="qualified">
+	<xs:element name="map">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="map" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="resource"       type="xs:string" use="required" />
+			<xs:attribute name="template"       type="xs:string" use="required" />
+			<xs:attribute name="path"           type="xs:string" />
+			<xs:attribute name="path-transform" type="xs:string" />
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
