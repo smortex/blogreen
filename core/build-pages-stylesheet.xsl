@@ -92,7 +92,7 @@
 					</xsl:if>
 				</axsl:call-template>
 			</axsl:document>
-			<axsl:apply-templates />
+			<axsl:apply-templates select="res:*" />
 		</axsl:template>
 		<xsl:apply-templates />
 	</xsl:template>
