@@ -89,7 +89,9 @@
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
 									<axsl:value-of select="concat('${{PUBDIR}}/', $filename, ': ', '${{OBJDIR}}/', $filename, $new-line)" />
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}/', $filename, ' ${{BLOGREEN}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
-				<axsl:apply-templates />
+				<xsl:for-each select="map:map">
+					<axsl:apply-templates select="{@resource}" />
+				</xsl:for-each>
 			</axsl:template>
 
 			<xsl:apply-templates />

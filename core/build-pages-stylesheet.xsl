@@ -92,7 +92,9 @@
 					</xsl:if>
 				</axsl:call-template>
 			</axsl:document>
-			<axsl:apply-templates select="res:*" />
+			<xsl:for-each select="map:map">
+				<axsl:apply-templates select="{@resource}" />
+			</xsl:for-each>
 		</axsl:template>
 		<xsl:apply-templates />
 	</xsl:template>
