@@ -78,7 +78,14 @@
 	<xsl:template match="map:map">
 		<axsl:template match="{@resource}">
 			<axsl:variable name="filename">
-				<axsl:value-of select="concat($OBJDIR, @uri, '/index.html')" />
+				<axsl:value-of select="$OBJDIR" />
+				<axsl:value-of select="@uri" />
+				<!-- FIXME XSL 2.0
+				<axsl:if test="ends-with(@uri, '/')">
+				-->
+				<axsl:if test="substring(@uri, string-length(@uri)) = '/'">
+					<axsl:text>index.html</axsl:text>
+				</axsl:if>
 			</axsl:variable>
 			<axsl:call-template name="progress">
 				<axsl:with-param name="filename" select="$filename" />
