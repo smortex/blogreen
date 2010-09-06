@@ -6,10 +6,23 @@
 			<xs:sequence>
 				<xs:element name="map" minOccurs="0" maxOccurs="unbounded" />
 			</xs:sequence>
-			<xs:attribute name="resource"       type="xs:string" use="required" />
+			<xs:attribute name="resource"       type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>An XPath expression that SHOULD match Blogreen Resources from the XSL context of the parent's mapping resource.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 			<xs:attribute name="template"       type="xs:string" use="required" />
-			<xs:attribute name="path"           type="xs:string" />
-			<xs:attribute name="path-transform" type="xs:string" />
+			<xs:attribute name="path"           type="xs:string">
+				<xs:annotation>
+					<xs:documentation>An XPath expression evaluated in the context of the @resource for generating a string appended to the parent's mapping path.  If the resulting string ends with a slash (/), a directory is created and the resource rendering is saved as index.html in it.</xs:documentation>
+					<xs:documentation>Defaults to '/'.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="path-transform" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Optional transformation to operate on the string resulting of the evaluation of @path before it's appended to the mapping parent's @path.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
 		</xs:complexType>
 	</xs:element>
 </xs:schema>
