@@ -25,9 +25,6 @@
 				</xsl:call-template>
 			</xsl:otherwise>
 		</xsl:choose>
-		<xsl:if test="not(contains($path, '.html'))">
-			<xsl:text>/</xsl:text>
-		</xsl:if>
 
 	</xsl:template>
 
