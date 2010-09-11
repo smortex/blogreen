@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- vim:set noet sw=4 ts=4: -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://blogreen.org/TR/Config" elementFormDefault="qualified">
+	<xs:element name="config">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RootUri">
+					<xs:annotation>
+						<xs:documentation>Generated pages root URI, without trailing slash.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+
+				<xs:element name="plugins" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Plugins to load when building pages.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="plugin" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+
+				<xs:element name="filters" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Filters to load when finishing pages.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="filter" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="name" />
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
