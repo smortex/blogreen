@@ -41,6 +41,8 @@ digraph Blogreen {
 	at		[label="aggregate-template.xsl"];
 	et		[label="expand-template.xsl"];
 
+	config -> et [label="document()", style=dashed];
+
 	at -> objtmplxml [color="#ef2929"];
 	objtmplxml -> et;
 	et -> objtmplxsl [color="#ef2929"];
@@ -77,6 +79,8 @@ digraph Blogreen {
 	label = "Pages generator";
     }
 
+    bfpp [label="build-finish-page-pipeline.xsl"];
+    config -> bfpp;
 
     tm -> at [lhead=clusterTemplates];
 
@@ -113,6 +117,7 @@ digraph Blogreen {
 	fpp -> pindex;
 	rs -> r;
 	ss -> s;
+	bfpp -> fpp;
     }
 
     {

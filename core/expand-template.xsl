@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:axsl="http://www.w3.org/1999/XSL/TransformAlias" xmlns="http://www.w3.org/1999/xhtml" xmlns:bgn="http://blogreen.org" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bat="http://blogreen.org/TR/AggregatedTemplate" version="1.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:axsl="http://www.w3.org/1999/XSL/TransformAlias" xmlns="http://www.w3.org/1999/xhtml" xmlns:bgn="http://blogreen.org" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bat="http://blogreen.org/TR/AggregatedTemplate" xmlns:c="http://blogreen.org/TR/Config" version="1.0">
 	<xsl:output type="xml" indent="yes" />
 
 	<!--
@@ -34,11 +34,11 @@
 				<xsl:call-template name="do-not-edit" />
 				-->
 				<axsl:import href="{$BLOGREEN}/template-utils.xsl" />
-				<!--
-				XXX: Plugins
-				-->
-				<axsl:import href="{$BLOGREEN}/../plugins/breadcrumbs.xsl" />
-				<axsl:import href="{$BLOGREEN}/../plugins/main-navigation.xsl" />
+
+				<!-- Import plugins configured by the user -->
+				<xsl:for-each select="document(concat($SRCDIR, '/config.xml'))//c:plugins/c:plugin">
+					<axsl:import href="{$BLOGREEN}/../plugins/{@name}.xsl" />
+				</xsl:for-each>
 
 				<axsl:param name="output-language">en</axsl:param>
 

@@ -110,6 +110,13 @@ ${OBJDIR}/pages-makefile.xsl: ${BLOGREEN}/build-pages-makefile.xsl ${SRCDIR}/map
 
 ################################################################################
 
+all: ${OBJDIR}/finish-page-pipeline.xsl
+
+${OBJDIR}/finish-page-pipeline.xsl: ${BLOGREEN}/build-finish-page-pipeline.xsl ${SRCDIR}/config.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${.TARGET} ${BLOGREEN}/build-finish-page-pipeline.xsl ${SRCDIR}/config.xml
+
+################################################################################
+
 PAGES_MAKEFILES=${SRCDIR}/Makefile.pages
 
 all: ${PAGES_MAKEFILES}
