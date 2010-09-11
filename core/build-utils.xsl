@@ -25,7 +25,7 @@
 			</xsl:message>
 		</xsl:if>
 		<xsl:message terminate="no">
-			<xsl:value-of select="concat('  GEN    ', substring-after($filename, $SRCDIR))" />
+			<xsl:value-of select="concat('  GEN    ', substring-after($filename, concat($SRCDIR, '/')))" />
 		</xsl:message>
 	</xsl:template>
 
