@@ -90,11 +90,11 @@
 				</axsl:variable>
 
 
-									<axsl:value-of select="concat('all: ${{PUBDIR}}/', $filename, $new-line)" />
-									<axsl:value-of select="concat('${{OBJDIR}}/', $filename, ': ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', ' ${{OBJDIR}}/{$templates-directory}/{@template}.xsl', $new-line)" />
+									<axsl:value-of select="concat('all: ${{PUBDIR}}', $filename, $new-line)" />
+									<axsl:value-of select="concat('${{OBJDIR}}', $filename, ': ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', ' ${{OBJDIR}}/{$templates-directory}/{@template}.xsl', $new-line)" />
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
-									<axsl:value-of select="concat('${{PUBDIR}}/', $filename, ': ', '${{OBJDIR}}/', $filename, $new-line)" />
-									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}/', $filename, ' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
+									<axsl:value-of select="concat('${{PUBDIR}}', $filename, ': ', '${{OBJDIR}}', $filename, $new-line)" />
+									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}', $filename, ' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
 				<xsl:for-each select="map:map">
 					<axsl:apply-templates select="{@resource}" />
 				</xsl:for-each>

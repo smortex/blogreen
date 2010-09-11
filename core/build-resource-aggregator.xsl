@@ -94,7 +94,7 @@
 					<xsl:text>concat(</xsl:text>
 					<xsl:value-of select="$root-uri" />
 					<xsl:if test="@path">
-						<xsl:text>, '/', </xsl:text>
+						<xsl:text>, </xsl:text>
 						<xsl:value-of select="@path" />
 					</xsl:if>
 					<xsl:text>)</xsl:text>
@@ -103,7 +103,7 @@
 					<xsl:value-of select="@path" />
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:text>''</xsl:text>
+					<xsl:text>'/'</xsl:text>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
