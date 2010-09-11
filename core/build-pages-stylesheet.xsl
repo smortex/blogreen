@@ -6,7 +6,7 @@
 	Input: mapping.xml
 
 	Parameters:
-	- filename[='']    TODO: Set some decent default value
+	- filename[=<undefined>]
 	  Name of the stylesheet to generate.
 -->
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:axsl="http://www.w3.org/1999/XSL/TransformAlias" xmlns:map="http://blogreen.org/TR/Mapping" version="1.0">

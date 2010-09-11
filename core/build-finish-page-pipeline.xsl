@@ -22,12 +22,12 @@
 			<axsl:stylesheet version="1.0" xmlns:bgn="http://blogreen.org">
 				<axsl:import href="{$BLOGREEN}/finish-pages.xsl" />
 
-				<!-- FIXME: Load plugin filters -->
+				<!-- Load plugin filters -->
 				<xsl:for-each select="//c:filters/c:filter">
 					<axsl:import href="{$BLOGREEN}/../filters/{@name}.xsl" />
 				</xsl:for-each>
 
-				<!-- FIXME: Load user filters -->
+				<!-- Load user filters -->
 				<axsl:import href="{$SRCDIR}/filters.xsl" />
 
 				<axsl:include href="{$BLOGREEN}/build-utils.xsl" />
@@ -53,13 +53,6 @@
 					</axsl:document>
 				</axsl:template>
 
-				<!--
-				<axsl:template match="node()|@*">
-					<axsl:copy>
-						<axsl:apply-templates select="@*|node()" />
-					</axsl:copy>
-				</axsl:template>
-				-->
 				<axsl:template match="@*|node()">
 					<axsl:if test="not((@class = 'drop-if-empty') and not (node()) or name(.) = 'class' and . = 'drop-if-empty' )">
 						<axsl:apply-imports />
