@@ -26,6 +26,8 @@
 	Do not copy bgn:* elements.  Plugins should catch it and add
 	content.
 	-->
-	<xsl:template match="bgn:*" />
+	<xsl:template match="bgn:*">
+		<xsl:message>Unhandled &lt;<xsl:value-of select="name(.)" />&gt;. Are you missing a plugin reference?</xsl:message>
+	</xsl:template>
 
 </xsl:stylesheet>

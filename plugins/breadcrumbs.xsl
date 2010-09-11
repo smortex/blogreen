@@ -41,7 +41,7 @@
 				</xsl:apply-templates>
 			</xsl:element>
 
-			<xsl:text> → </xsl:text>
+			<bgn:breadcrumbs-separator />
 	</xsl:template>
 
 </xsl:stylesheet>
