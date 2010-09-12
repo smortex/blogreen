@@ -33,6 +33,7 @@
 			</xsl:if>
 
 			<xsl:for-each select="res:*[@uri]">
+				<xsl:sort select="@mapping-order" data-type="number" />
 				<xsl:element name="a">
 					<xsl:attribute name="href">
 						<xsl:value-of select="@uri" />

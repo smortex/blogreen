@@ -112,6 +112,9 @@
 				<axsl:attribute name="order">
 					<axsl:value-of select="position()" />
 				</axsl:attribute>
+				<axsl:attribute name="mapping-order">
+					<xsl:value-of select="position()" />
+				</axsl:attribute>
 
 				<axsl:apply-templates select="@*|node()" />
 			</axsl:copy>
