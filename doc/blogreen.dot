@@ -55,6 +55,8 @@ digraph Blogreen {
     subgraph clusterResources {
 	ra		[label="resources-aggregator.xsl"];
 	bra		[label="build-resources-aggregator.xsl"];
+	ares		[label="aggregated-resources.xml", shape=ellipse];
+	uexp		[label="uri-expander.xsl"];
 	allres		[label="all-resources.xml", shape=ellipse];
 
 	label = "Resources aggregator";
@@ -108,9 +110,12 @@ digraph Blogreen {
     config -> ss [label="document()", style=dashed];
     allres -> ss;
 
+    ares -> uexp;
+
     {
 	edge[color="#ef2929"];
-	bra -> ra -> allres;
+	bra -> ra -> ares;
+	uexp -> allres;
 	bps -> ps -> index;
 	bpm -> pm;
 	btm -> tm;

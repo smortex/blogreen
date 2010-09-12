@@ -36,7 +36,7 @@
 	  resources.xml
 
 	Parameters:
-	- filename[="$OBJDIR/all-resources.xml"]
+	- filename[="$OBJDIR/aggregated-resources.xml"]
 	  Filename of the aggregated XML resource file.
 </xsl:comment>
 			<axsl:stylesheet version="1.0" xmlns:res="http://blogreen.org/TR/Resources">
@@ -44,7 +44,7 @@
 				<axsl:include href="{$BLOGREEN}/resource-utils.xsl" />
 				<axsl:include href="{$BLOGREEN}/string-utils.xsl" />
 
-				<axsl:param name="filename" select="'{$OBJDIR}/all-resources.xml'" />
+				<axsl:param name="filename" select="'{$OBJDIR}/aggregated-resources.xml'" />
 
 				<axsl:template match="/res:resources">
 					<axsl:call-template name="check-required-parameter">
@@ -86,19 +86,8 @@
 
 
 	<xsl:template match="map:map">
-		<xsl:param name="root-uri" />
-
 		<xsl:variable name="resource-uri">
 			<xsl:choose>
-				<xsl:when test="$root-uri">
-					<xsl:text>concat(</xsl:text>
-					<xsl:value-of select="$root-uri" />
-					<xsl:if test="@path">
-						<xsl:text>, </xsl:text>
-						<xsl:value-of select="@path" />
-					</xsl:if>
-					<xsl:text>)</xsl:text>
-				</xsl:when>
 				<xsl:when test="@path">
 					<xsl:value-of select="@path" />
 				</xsl:when>
@@ -127,8 +116,6 @@
 			</axsl:copy>
 		</axsl:template>
 
-		<xsl:apply-templates>
-			<xsl:with-param name="root-uri" select="$resource-uri" />
-		</xsl:apply-templates>
+		<xsl:apply-templates />
 	</xsl:template>
 </xsl:stylesheet>

@@ -74,8 +74,11 @@ lint:
 
 all: ${OBJDIR}/all-resources.xml
 
-${OBJDIR}/all-resources.xml: ${OBJDIR}/resource-aggregator.xsl ${SRCDIR}/resources.xml
-	@${XSLTPROC} ${XSLTPROC_FLAGS} ${OBJDIR}/resource-aggregator.xsl ${SRCDIR}/resources.xml
+${OBJDIR}/aggregated-resources.xml: ${OBJDIR}/resource-aggregator.xsl ${SRCDIR}/resources.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${.TARGET} ${OBJDIR}/resource-aggregator.xsl ${SRCDIR}/resources.xml
+
+${OBJDIR}/all-resources.xml: ${BLOGREEN}/uri-expander.xsl ${OBJDIR}/aggregated-resources.xml
+	@${XSLTPROC} ${XSLTPROC_FLAGS} --stringparam filename ${.TARGET} ${BLOGREEN}/uri-expander.xsl ${OBJDIR}/aggregated-resources.xml
 
 ${OBJDIR}/resource-aggregator.xsl: ${BLOGREEN}/build-resource-aggregator.xsl ${SRCDIR}/mapping.xml
 	@${XSLTPROC} ${XSLTPROC_FLAGS} ${BLOGREEN}/build-resource-aggregator.xsl ${SRCDIR}/mapping.xml
