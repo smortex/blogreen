@@ -6,7 +6,6 @@
 		<xsl:param name="context" />
 		<xsl:param name="root-label" />
 
-			<div class="breadcrumbs">
 				<xsl:if test="../@uri">
 					<span class="path">
 						<xsl:apply-templates select=".." mode="private-plugin-breadcrumbs-link" />
@@ -19,7 +18,6 @@
 						</xsl:with-param>
 					</xsl:apply-templates>
 				</bgn:breadcrumbs-selected>
-			</div>
 	</xsl:template>
 
 	<xsl:template match="*" mode="private-plugin-breadcrumbs-link">
