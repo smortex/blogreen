@@ -5,6 +5,7 @@
 	<xsl:template match="*" mode="plugin-navigation">
 		<xsl:param name="root" select="'res:resources'" />
 		<xsl:param name="display-root" select='no' />
+		<xsl:param name="root-label" />
 		<xsl:variable name="uri" select="@uri" />
 
 		<!-- FIXME The way to select what to bind on the menu. er.. sucks -->
@@ -19,7 +20,14 @@
 							<xsl:text> selected</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
+					<xsl:choose>
+						<xsl:when test="$root-label">
+							<xsl:value-of select="$root-label" />
+						</xsl:when>
+						<xsl:otherwise>
 						<xsl:apply-templates select="/res:resources" mode="title" />
+						</xsl:otherwise>
+					</xsl:choose>
 					</xsl:element>
 					<bgn:navigation-separator />
 			</xsl:if>
