@@ -13,7 +13,7 @@
 
 			<xsl:if test="$display-root = 'yes'">
 					<xsl:element name="a">
-						<xsl:attribute name="href">/</xsl:attribute>
+						<xsl:attribute name="href"><xsl:value-of select="@uri" /></xsl:attribute>
 					<xsl:attribute name="class">
 						<xsl:text>menu-item</xsl:text>
 						<xsl:if test="$uri = @uri">
