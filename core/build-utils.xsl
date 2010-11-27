@@ -29,6 +29,16 @@
 		</xsl:message>
 	</xsl:template>
 
+	<xsl:template name="file-exists">
+		<xsl:param name="href" />
+
+		<xsl:if test="not(document($href))">
+			<xsl:call-template name="error">
+				<xsl:with-param name="message"><xsl:value-of select="$href" />: Can't read file</xsl:with-param>
+			</xsl:call-template>
+		</xsl:if>
+	</xsl:template>
+
 	<xsl:template name="warning">
 		<xsl:param name="message" />
 		<xsl:message terminate="no">

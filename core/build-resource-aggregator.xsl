@@ -66,9 +66,11 @@
 				</axsl:template>
 
 				<axsl:template match="res:import">
-					<axsl:if test="not(document(@href))">
-						<axsl:message terminate="yes">PLOP</axsl:message>
-					</axsl:if>
+					<axsl:call-template name="file-exists">
+						<axsl:with-param name="href">
+							<xsl:value-of select="@href" />
+						</axsl:with-param>
+					</axsl:call-template>
 					<axsl:apply-templates select="document(@href)" />
 				</axsl:template>
 
