@@ -24,11 +24,26 @@
 
 				<!-- Load plugin filters -->
 				<xsl:for-each select="//c:filters/c:filter">
-					<axsl:import href="{$BLOGREEN}/../filters/{@name}.xsl" />
+					<xsl:choose>
+						<xsl:when test="@scope = 'system'">
+							<axsl:import href="{$BLOGREEN}/../filters/{@name}.xsl" />
+						</xsl:when>
+						<xsl:when test="@scope = 'user'">
+							<axsl:import href="{$SRCDIR}/filters/{@name}.xsl" />
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:call-template name="error">
+								<xsl:with-param name="message">
+									<xsl:text>The filter '</xsl:text>
+									<xsl:value-of select="@name" />
+									<xsl:text>' has an unexpected scope '</xsl:text>
+									<xsl:value-of select="@scope" />
+									<xsl:text>' (expected 'system' or 'user').</xsl:text>
+								</xsl:with-param>
+							</xsl:call-template>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:for-each>
-
-				<!-- Load user filters -->
-				<axsl:import href="{$SRCDIR}/filters.xsl" />
 
 				<axsl:include href="{$BLOGREEN}/build-utils.xsl" />
 
