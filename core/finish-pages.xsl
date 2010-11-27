@@ -27,7 +27,12 @@
 	content.
 	-->
 	<xsl:template match="bgn:*">
-		<xsl:message>Unhandled &lt;<xsl:value-of select="name(.)" />&gt;. Are you missing a plugin reference?</xsl:message>
+		<xsl:param name="warn" />
+		<xsl:if test="not(@warn = 'no')">
+			<xsl:if test="$warn = 'yes'">
+				<xsl:message>Unhandled &lt;<xsl:value-of select="name(.)" />&gt;. Are you missing a plugin reference?</xsl:message>
+			</xsl:if>
+		</xsl:if>
 	</xsl:template>
 
 </xsl:stylesheet>

@@ -65,13 +65,16 @@
 							<link rel="stylesheet" type="text/css" media="all" href="/css/blogreen.css" />
 							<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
 							<link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
-							<bgn:page-css />
 
-							<bgn:page-javascript />
+							<bgn:favicon warn="no" />
+
+							<bgn:page-css warn="no" />
+
+							<bgn:page-javascript warn="no" />
 						</head>
 
 						<axsl:element name="body" namespace="http://www.w3.org/1999/xhtml">
-							<bgn:body-onload />
+							<bgn:body-onload warn="no" />
 							<xsl:apply-templates select="xhtml:body/*" mode="copy" />
 						</axsl:element>
 
@@ -130,6 +133,7 @@
 
 	<xsl:template match="bgn:plugin[@name]" mode="copy">
 		<axsl:apply-templates select="." mode="plugin-{@name}">
+			<axsl:with-param name="warn">yes</axsl:with-param>
 			<axsl:with-param name="context">
 				<axsl:value-of select="$context" />
 			</axsl:with-param>
