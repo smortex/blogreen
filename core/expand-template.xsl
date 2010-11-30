@@ -119,32 +119,43 @@
 	Try to fill-in placeholders with partials
 	-->
 	<xsl:template match="bgn:placeholder[@name]" mode="copy">
+		<xsl:choose>
+			<xsl:when test="@phantom = true()">
+				<xsl:call-template name="placeholder-content" />
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
+					<xsl:attribute name="id">
+						<xsl:value-of select="@name" />
+					</xsl:attribute>
+					<xsl:attribute name="class">drop-if-empty</xsl:attribute>
+					<xsl:call-template name="placeholder-content" />
+				</xsl:element>
+			</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="placeholder-content">
 		<xsl:variable name="name">
 			<xsl:value-of select="@name" />
 		</xsl:variable>
-		<xsl:element name="div" namespace="http://www.w3.org/1999/xhtml">
-			<xsl:attribute name="id">
-				<xsl:value-of select="@name" />
-			</xsl:attribute>
-			<xsl:attribute name="class">drop-if-empty</xsl:attribute>
-			<xsl:choose>
-				<xsl:when test="//bgn:content[@placeholder=$name]">
-					<!--
-					The aggregated templates contains the contents of the
-					placeholder.  Add it.
-					-->
-					<xsl:apply-templates select="//bgn:content[@placeholder=$name]/node()" mode="copy" />
-				</xsl:when>
-				<xsl:otherwise>
-					<!--
-					The aggregated templates does not contains the contents of the
-					placeholder.  It will be computer when redering individual
-					pages, so copy it.  Some XSLT will replace it later.
-					-->
-					<axsl:apply-templates select="." mode="{$name}" />
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:element>
+		<xsl:choose>
+			<xsl:when test="//bgn:content[@placeholder=$name]">
+				<!--
+				The aggregated templates contains the contents of the
+				placeholder.  Add it.
+				-->
+				<xsl:apply-templates select="//bgn:content[@placeholder=$name]/node()" mode="copy" />
+			</xsl:when>
+			<xsl:otherwise>
+				<!--
+				The aggregated templates does not contains the contents of the
+				placeholder.  It will be computer when redering individual
+				pages, so copy it.  Some XSLT will replace it later.
+				-->
+				<axsl:apply-templates select="." mode="{$name}" />
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="bgn:plugin[@name]" mode="copy">
