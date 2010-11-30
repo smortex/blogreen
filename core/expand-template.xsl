@@ -16,7 +16,7 @@
 	The last template is the one referenced by the others so we only
 	need ot proccess this one.
 	-->
-	<xsl:template match="/bat:templates/bat:template[position()=last()]/xhtml:html">
+	<xsl:template match="/bat:templates/bat:template[position()=last()]">
 
 		<xsl:call-template name="check-required-parameter">
 			<xsl:with-param name="name" select="'filename'" />
@@ -42,6 +42,9 @@
 
 				<axsl:param name="output-language">en</axsl:param>
 
+				<xsl:choose>
+					<xsl:when test="xhtml:html">
+						<!-- Template is an XHTML file -->
 				<axsl:template name="{/bat:templates/bat:template[position()=1]/xhtml:html/xhtml:head/xhtml:title}">
 					<axsl:param name="context" />
 
@@ -75,11 +78,24 @@
 
 						<axsl:element name="body" namespace="http://www.w3.org/1999/xhtml">
 							<bgn:body-onload warn="no" />
-							<xsl:apply-templates select="xhtml:body/*" mode="copy" />
+							<xsl:apply-templates select="xhtml:html/xhtml:body/*" mode="copy" />
 						</axsl:element>
 
 					</axsl:element>
 				</axsl:template>
+					</xsl:when>
+					<xsl:otherwise>
+						<!-- Template is a plain XML file -->
+						<xsl:if test="not(child::*[1]/@bgn:template-name)">
+							<xsl:call-template name="error">
+								<xsl:with-param name="message">No template name provided.</xsl:with-param>
+							</xsl:call-template>
+						</xsl:if>
+						<axsl:template name="{child::*[1]/@bgn:template-name}">
+							<xsl:apply-templates select="*" mode="copy" />
+						</axsl:template>
+					</xsl:otherwise>
+				</xsl:choose>
 
 				<!--
 				Generate default low-priority templates to warn the user about missing
