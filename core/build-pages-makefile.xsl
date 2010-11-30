@@ -95,6 +95,20 @@
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
 									<axsl:value-of select="concat('${{PUBDIR}}', $filename, ': ', '${{OBJDIR}}', $filename, $new-line)" />
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}', $filename, ' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
+				<xsl:for-each select="map:alias">
+					<axsl:variable name="alias-filename">
+						<!-- FIXME XSL 2.0
+						<axsl:if test="ends-with(@uri, '/')">
+						-->
+						<xsl:text>/</xsl:text>
+						<axsl:value-of select="{@path}" />
+					</axsl:variable>
+
+					<axsl:value-of select="concat('all: ${{PUBDIR}}', $alias-filename, $new-line)" />
+					<axsl:value-of select="concat('${{PUBDIR}}', $alias-filename, ': ', '${{OBJDIR}}', $alias-filename, $new-line)" />
+					<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}', $alias-filename, ' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $alias-filename, $new-line)" />
+
+				</xsl:for-each>
 				<xsl:for-each select="map:map">
 					<axsl:apply-templates select="{@resource}" />
 				</xsl:for-each>

@@ -48,10 +48,10 @@
 		</xsl:document>
 	</xsl:template>
 
-	<xsl:template match="map:map">
+	<xsl:template match="map:map|map:alias">
 				<xsl:variable name="template" select="@template" />
 
-				<xsl:if test="count(preceding::map:map[@template = $template]) + count(ancestor::map:map[@template = $template]) = 0">
+				<xsl:if test="count(preceding::map:map[@template = $template]) + count(ancestor::map:map[@template = $template]) + count(preceding::map:alias[@template = $template]) + count(ancestor::map:alias[@template = $template]) = 0">
 					<xsl:variable name="source" select="concat('${SRCDIR}/', $templates-directory, '/', @template, '.xml')" />
 					<xsl:variable name="target-no-ext" select="concat('${OBJDIR}/', $templates-directory, '/', @template)" />
 					<xsl:variable name="target-xml" select="concat($target-no-ext, '.xml')" />

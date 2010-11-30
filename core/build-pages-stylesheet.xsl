@@ -39,9 +39,9 @@
 			<!-- XXX import headers -->
 
 			<!-- import templates -->
-			<xsl:for-each select="//map:map">
+			<xsl:for-each select="//map:map|//map:alias">
 				<xsl:variable name="template" select="@template" />
-				<xsl:if test="count(preceding::map:map[@template=$template]) + count(ancestor::map:map[@template = $template]) = 0">
+				<xsl:if test="count(preceding::map:map[@template=$template]) + count(ancestor::map:map[@template = $template]) + count(preceding::map:alias[@template=$template]) + count(ancestor::map:alias[@template = $template]) = 0">
 					<!--
 					FIXME: Static reference to '/templates/'.
 					-->
@@ -99,6 +99,30 @@
 					</xsl:if>
 				</axsl:call-template>
 			</axsl:document>
+			<xsl:for-each select="map:alias">
+				<axsl:variable name="alias-filename">
+					<!--
+					<axsl:value-of select="ancestor::res:*[1]/@uri" />
+					-->
+					<axsl:value-of select="$OBJDIR" />
+					<xsl:text>/</xsl:text>
+					<axsl:value-of select="{@path}" />
+				</axsl:variable>
+				<axsl:call-template name="progress">
+					<axsl:with-param name="filename">
+						<axsl:value-of select="$alias-filename" />
+					</axsl:with-param>
+				</axsl:call-template>
+				<axsl:document href="{{$alias-filename}}">
+					<axsl:call-template name="{@template}">
+						<xsl:if test="@context">
+							<axsl:with-param name="context">
+								<xsl:value-of select="@context" />
+							</axsl:with-param>
+						</xsl:if>
+					</axsl:call-template>
+				</axsl:document>
+			</xsl:for-each>
 			<xsl:for-each select="map:map">
 				<axsl:apply-templates select="{@resource}" />
 			</xsl:for-each>
