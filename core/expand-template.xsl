@@ -92,6 +92,7 @@
 							</xsl:call-template>
 						</xsl:if>
 						<axsl:template name="{child::*[1]/@bgn:template-name}">
+							<axsl:param name="context" />
 							<xsl:apply-templates select="*" mode="copy" />
 						</axsl:template>
 					</xsl:otherwise>
@@ -153,7 +154,9 @@
 				placeholder.  It will be computer when redering individual
 				pages, so copy it.  Some XSLT will replace it later.
 				-->
-				<axsl:apply-templates select="." mode="{$name}" />
+				<axsl:apply-templates select="." mode="{$name}">
+					<axsl:with-param name="context" select="$context" />
+				</axsl:apply-templates>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
