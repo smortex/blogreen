@@ -49,7 +49,27 @@
 
 				<axsl:param name="filename" />
 
-				<axsl:output method="text" />
+				<!--
+				Specify both axsl: prefix (TransformAlias) and namespace
+				(Transform).  This weird combinaison work-around a xsltproc
+				bug / inconsistent behaviour and produce the output element in
+				the Transform namespace in the resulting fragment.
+				-->
+				<xsl:element name="axsl:output" namespace="http://www.w3.org/1999/XSL/Transform">
+					<xsl:attribute name="method">text</xsl:attribute>
+					<xsl:if test="/c:config/c:cdata-section-elements">
+						<!--
+						Because of a limitation in xslproc, cdata-section-elements
+						can be set ONLY at the beginning of a stylesheet and not
+						when creating a document.  For this reason, we set this
+						attribute here, while we define the output as being plain
+						text (website construction progress diagnostic).
+						-->
+						<xsl:attribute name="cdata-section-elements">
+							<xsl:value-of select="/c:config/c:cdata-section-elements" />
+						</xsl:attribute>
+					</xsl:if>
+				</xsl:element>
 
 				<axsl:template match="/">
 					<axsl:call-template name="check-required-parameter">
