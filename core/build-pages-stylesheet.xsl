@@ -100,7 +100,7 @@
 				</axsl:call-template>
 			</axsl:document>
 			<xsl:for-each select="map:alias">
-				<axsl:variable name="alias-filename">
+				<axsl:variable name="alias-{position()}-filename">
 					<!--
 					<axsl:value-of select="ancestor::res:*[1]/@uri" />
 					-->
@@ -110,10 +110,10 @@
 				</axsl:variable>
 				<axsl:call-template name="progress">
 					<axsl:with-param name="filename">
-						<axsl:value-of select="$alias-filename" />
+						<axsl:value-of select="$alias-{position()}-filename" />
 					</axsl:with-param>
 				</axsl:call-template>
-				<axsl:document href="{{$alias-filename}}">
+				<axsl:document href="{{$alias-{position()}-filename}}">
 					<axsl:call-template name="{@template}">
 						<xsl:if test="@context">
 							<axsl:with-param name="context">
