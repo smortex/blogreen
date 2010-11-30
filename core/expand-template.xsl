@@ -45,44 +45,44 @@
 				<xsl:choose>
 					<xsl:when test="xhtml:html">
 						<!-- Template is an XHTML file -->
-				<axsl:template name="{/bat:templates/bat:template[position()=1]/xhtml:html/xhtml:head/xhtml:title}">
-					<axsl:param name="context" />
+						<axsl:template name="{/bat:templates/bat:template[position()=1]/xhtml:html/xhtml:head/xhtml:title}">
+							<axsl:param name="context" />
 
-					<axsl:element name="html" namespace="http://www.w3.org/1999/xhtml">
-						<axsl:attribute name="xml:lang"><axsl:value-of select="$output-language" /></axsl:attribute>
+							<axsl:element name="html" namespace="http://www.w3.org/1999/xhtml">
+								<axsl:attribute name="xml:lang"><axsl:value-of select="$output-language" /></axsl:attribute>
 
-						<!--
-						TODO: Generate <head>…</head> contents.
-						-->
-						<head>
-							<title>
-								<axsl:apply-templates select="." mode="title">
-									<axsl:with-param name="context">
-										<axsl:value-of select="$context" />
-									</axsl:with-param>
-								</axsl:apply-templates>
-							</title>
+								<!--
+								TODO: Generate <head>…</head> contents.
+								-->
+								<head>
+									<title>
+										<axsl:apply-templates select="." mode="title">
+											<axsl:with-param name="context">
+												<axsl:value-of select="$context" />
+											</axsl:with-param>
+										</axsl:apply-templates>
+									</title>
 
-							<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+									<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
 
-							<link rel="stylesheet" type="text/css" media="all" href="/css/blogreen.css" />
-							<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
-							<link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
+									<link rel="stylesheet" type="text/css" media="all" href="/css/blogreen.css" />
+									<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
+									<link rel="stylesheet" type="text/css" media="print" href="/css/print.css" />
 
-							<bgn:favicon warn="no" />
+									<bgn:favicon warn="no" />
 
-							<bgn:page-css warn="no" />
+									<bgn:page-css warn="no" />
 
-							<bgn:page-javascript warn="no" />
-						</head>
+									<bgn:page-javascript warn="no" />
+								</head>
 
-						<axsl:element name="body" namespace="http://www.w3.org/1999/xhtml">
-							<bgn:body-onload warn="no" />
-							<xsl:apply-templates select="xhtml:html/xhtml:body/*" mode="copy" />
-						</axsl:element>
+								<axsl:element name="body" namespace="http://www.w3.org/1999/xhtml">
+									<bgn:body-onload warn="no" />
+									<xsl:apply-templates select="xhtml:html/xhtml:body/*" mode="copy" />
+								</axsl:element>
 
-					</axsl:element>
-				</axsl:template>
+							</axsl:element>
+						</axsl:template>
 					</xsl:when>
 					<xsl:otherwise>
 						<!-- Template is a plain XML file -->
@@ -127,24 +127,24 @@
 				<xsl:value-of select="@name" />
 			</xsl:attribute>
 			<xsl:attribute name="class">drop-if-empty</xsl:attribute>
-		<xsl:choose>
-			<xsl:when test="//bgn:content[@placeholder=$name]">
-				<!--
-				The aggregated templates contains the contents of the
-				placeholder.  Add it.
-				-->
-				<xsl:apply-templates select="//bgn:content[@placeholder=$name]/node()" mode="copy" />
-			</xsl:when>
-			<xsl:otherwise>
-				<!--
-				The aggregated templates does not contains the contents of the
-				placeholder.  It will be computer when redering individual
-				pages, so copy it.  Some XSLT will replace it later.
-				-->
-				<axsl:apply-templates select="." mode="{$name}" />
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:element>
+			<xsl:choose>
+				<xsl:when test="//bgn:content[@placeholder=$name]">
+					<!--
+					The aggregated templates contains the contents of the
+					placeholder.  Add it.
+					-->
+					<xsl:apply-templates select="//bgn:content[@placeholder=$name]/node()" mode="copy" />
+				</xsl:when>
+				<xsl:otherwise>
+					<!--
+					The aggregated templates does not contains the contents of the
+					placeholder.  It will be computer when redering individual
+					pages, so copy it.  Some XSLT will replace it later.
+					-->
+					<axsl:apply-templates select="." mode="{$name}" />
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:element>
 	</xsl:template>
 
 	<xsl:template match="bgn:plugin[@name]" mode="copy">
