@@ -19,7 +19,7 @@
 		</xsl:call-template>
 
 		<xsl:document href="{$filename}" method="xml" indent="yes">
-			<axsl:stylesheet version="1.0" xmlns:bgn="http://blogreen.org">
+			<axsl:stylesheet version="1.0" xmlns:bgn="http://blogreen.org" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 				<axsl:import href="{$BLOGREEN}/finish-pages.xsl" />
 
 				<!-- Load plugin filters -->
@@ -61,11 +61,22 @@
 						<axsl:with-param name="filename" select="$filename" />
 					</axsl:call-template>
 
-					<axsl:document href="{{$filename}}" method="xml" indent="yes" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd" >
-						<axsl:copy>
-							<axsl:apply-templates select="*" />
-						</axsl:copy>
-					</axsl:document>
+					<axsl:choose>
+						<axsl:when test="/xhtml:html">
+							<axsl:document href="{{$filename}}" method="xml" indent="yes" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+								<axsl:copy>
+									<axsl:apply-templates select="*" />
+								</axsl:copy>
+							</axsl:document>
+						</axsl:when>
+						<axsl:otherwise>
+							<axsl:document href="{{$filename}}" method="xml" indent="yes">
+								<axsl:copy>
+									<axsl:apply-templates select="*" />
+								</axsl:copy>
+							</axsl:document>
+						</axsl:otherwise>
+					</axsl:choose>
 				</axsl:template>
 
 				<axsl:template match="@*|node()">
