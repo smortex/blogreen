@@ -118,6 +118,17 @@
 					<xsl:value-of select="position()" />
 				</axsl:attribute>
 
+				<xsl:for-each select="map:alias">
+					<axsl:attribute name="{concat('uri-', @context)}">
+					<axsl:call-template name="resource-construct-uri">
+						<axsl:with-param name="path" select="{@path}" />
+						<axsl:with-param name="path-transform">
+							<xsl:value-of select="@path-transform" />
+						</axsl:with-param>
+					</axsl:call-template>
+					</axsl:attribute>
+				</xsl:for-each>
+
 				<axsl:apply-templates select="@*|node()" />
 			</axsl:copy>
 		</axsl:template>

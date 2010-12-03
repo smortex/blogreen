@@ -97,11 +97,13 @@
 									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}', $filename, ' --stringparam uri ', $filename ,' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
 				<xsl:for-each select="map:alias">
 					<axsl:variable name="alias-{position()}-filename">
+						<axsl:value-of select="concat(@uri, {@path})" />
 						<!-- FIXME XSL 2.0
 						<axsl:if test="ends-with(@uri, '/')">
 						-->
-						<xsl:text>/</xsl:text>
-						<axsl:value-of select="{@path}" />
+						<axsl:if test="substring({@path}, string-length({@path})) = '/'">
+							<axsl:text>index.html</axsl:text>
+						</axsl:if>
 					</axsl:variable>
 
 					<axsl:value-of select="concat('all: ${{PUBDIR}}', $alias-{position()}-filename, $new-line)" />

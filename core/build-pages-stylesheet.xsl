@@ -105,8 +105,7 @@
 					<axsl:value-of select="ancestor::res:*[1]/@uri" />
 					-->
 					<axsl:value-of select="$OBJDIR" />
-					<xsl:text>/</xsl:text>
-					<axsl:value-of select="{@path}" />
+					<axsl:value-of select="{concat('@uri-', @context)}" />
 				</axsl:variable>
 				<axsl:call-template name="progress">
 					<axsl:with-param name="filename">

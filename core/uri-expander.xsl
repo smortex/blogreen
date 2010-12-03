@@ -26,16 +26,36 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="res:*/@uri">
-		<xsl:attribute name="uri">
-			<xsl:call-template name="parent-path" />
+	<!--
+	Replace the context node partial path @uri with the full path of the
+	resource.
+	-->
+	<xsl:template match="res:*/@*[starts-with(name(.), 'uri')]">
+		<xsl:attribute name="{name(.)}">
+			<xsl:choose>
+				<xsl:when test="contains(., '://') or starts-with(., 'mailto:') or starts-with(., '/')">
+					<xsl:value-of select="." />
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:for-each select="..">
+						<xsl:call-template name="parent-path" />
+					</xsl:for-each>
+					<xsl:if test="not(name(.) = 'uri')">
+						<xsl:value-of select="../@uri" />
+					</xsl:if>
+					<xsl:value-of select="." />
+				</xsl:otherwise>
+			</xsl:choose>
 		</xsl:attribute>
 	</xsl:template>
 
+	<!--
+	Return the context node parent's full path.
+	-->
 	<xsl:template name="parent-path">
 		<xsl:for-each select="..">
 			<xsl:call-template name="parent-path" />
+			<xsl:value-of select="@uri" />
 		</xsl:for-each>
-		<xsl:value-of select="@uri" />
 	</xsl:template>
 </xsl:stylesheet>
