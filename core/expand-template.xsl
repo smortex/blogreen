@@ -64,6 +64,7 @@
 									</title>
 
 									<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+									<bgn:meta-tags warn="no" />
 
 									<link rel="stylesheet" type="text/css" media="all" href="/css/blogreen.css" />
 									<link rel="stylesheet" type="text/css" media="screen" href="/css/screen.css" />
