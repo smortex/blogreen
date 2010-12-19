@@ -68,6 +68,26 @@
 
 				<xsl:apply-templates />
 
+				<axsl:template name="page-uri">
+					<axsl:param name="page" />
+					<axsl:value-of select="@uri" />
+					<axsl:if test="$page">
+						<axsl:value-of select="concat('index-', $page, '.html')" />
+					</axsl:if>
+				</axsl:template>
+				<axsl:template name="previous-page-uri">
+					<axsl:param name="page" />
+					<axsl:call-template name="page-uri">
+						<axsl:with-param name="page" select="$page - 1" />
+					</axsl:call-template>
+				</axsl:template>
+				<axsl:template name="next-page-uri">
+					<axsl:param name="page" />
+					<axsl:call-template name="page-uri">
+						<axsl:with-param name="page" select="$page + 1" />
+					</axsl:call-template>
+				</axsl:template>
+
 				<axsl:template match="*|text()">
 				</axsl:template>
 
@@ -109,6 +129,7 @@
 					<xsl:if test="@paginate">
 						<axsl:with-param name="position" select="$start" />
 						<axsl:with-param name="count" select="$n-per-page" />
+						<axsl:with-param name="page" select="($start - 1) div $n-per-page" />
 					</xsl:if>
 				</axsl:call-template>
 			</axsl:document>

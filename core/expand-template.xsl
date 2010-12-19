@@ -49,6 +49,7 @@
 							<axsl:param name="context" />
 							<axsl:param name="position" />
 							<axsl:param name="count" />
+							<axsl:param name="page" />
 
 							<axsl:element name="html" namespace="http://www.w3.org/1999/xhtml">
 								<axsl:attribute name="xml:lang"><axsl:value-of select="$output-language" /></axsl:attribute>
@@ -62,6 +63,7 @@
 											<axsl:with-param name="context" select="$context" />
 											<axsl:with-param name="position" select="$position" />
 											<axsl:with-param name="count" select="$count" />
+											<axsl:with-param name="page" select="$page"/>
 										</axsl:apply-templates>
 									</title>
 
@@ -98,6 +100,7 @@
 							<axsl:param name="context" />
 							<axsl:param name="position" />
 							<axsl:param name="count" />
+							<axsl:param name="page" />
 							<xsl:apply-templates select="*" mode="copy" />
 						</axsl:template>
 					</xsl:otherwise>
@@ -163,6 +166,7 @@
 					<axsl:with-param name="context" select="$context" />
 					<axsl:with-param name="position" select="$position" />
 					<axsl:with-param name="count" select="$count" />
+					<axsl:with-param name="page" select="$page" />
 				</axsl:apply-templates>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -174,6 +178,7 @@
 			<axsl:with-param name="context" select="$context" />
 			<axsl:with-param name="position" select="$position" />
 			<axsl:with-param name="count" select="$count" />
+			<axsl:with-param name="page" select="$page" />
 			<xsl:apply-templates mode="copy"/>
 		</axsl:apply-templates>
 	</xsl:template>
