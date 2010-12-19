@@ -78,23 +78,48 @@
 		</xsl:template>
 
 		<xsl:template match="map:map">
-			<axsl:template match="{@resource}">
+			<axsl:template name="{generate-id()}-paginate">
+				<axsl:param name="start" select="1" />
+				<axsl:param name="n-per-page" select="10" />
+				<axsl:param name="count" select="0" />
+
 				<axsl:variable name="filename">
 					<axsl:value-of select="@uri" />
 					<!-- FIXME XSL 2.0
 					<axsl:if test="ends-with(@uri, '/')">
 					-->
 					<axsl:if test="substring(@uri, string-length(@uri)) = '/'">
-						<axsl:text>index.html</axsl:text>
+						<axsl:text>index</axsl:text>
+						<axsl:if test="$start > 1">
+							<axsl:value-of select="concat('-', ($start - 1) div $n-per-page)" />
+						</axsl:if>
+						<axsl:text>.html</axsl:text>
 					</axsl:if>
 				</axsl:variable>
 
+				<axsl:value-of select="concat('all: ${{PUBDIR}}', $filename, $new-line)" />
+				<axsl:value-of select="concat('${{OBJDIR}}', $filename, ': ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', ' ${{OBJDIR}}/{$templates-directory}/{@template}.xsl', $new-line)" />
+				<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
+				<axsl:value-of select="concat('${{PUBDIR}}', $filename, ': ', '${{OBJDIR}}', $filename, $new-line)" />
+				<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}', $filename, ' --stringparam uri ', $filename ,' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
 
-									<axsl:value-of select="concat('all: ${{PUBDIR}}', $filename, $new-line)" />
-									<axsl:value-of select="concat('${{OBJDIR}}', $filename, ': ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', ' ${{OBJDIR}}/{$templates-directory}/{@template}.xsl', $new-line)" />
-									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} ', $stylesheet, ' ${{OBJDIR}}/all-resources.xml', $new-line)" />
-									<axsl:value-of select="concat('${{PUBDIR}}', $filename, ': ', '${{OBJDIR}}', $filename, $new-line)" />
-									<axsl:value-of select="concat('&#x09;@${{XSLTPROC}} ${{XSLTPROC_FLAGS}} --stringparam filename ${{PUBDIR}}', $filename, ' --stringparam uri ', $filename ,' ${{OBJDIR}}/finish-page-pipeline.xsl ${{OBJDIR}}/', $filename, $new-line)" />
+				<axsl:if test="$start + $n-per-page &lt; $count">
+					<axsl:call-template name="{generate-id()}-paginate">
+						<axsl:with-param name="start" select="$start + $n-per-page" />
+						<axsl:with-param name="n-per-page" select="$n-per-page" />
+						<axsl:with-param name="count" select="$count" />
+					</axsl:call-template>
+				</axsl:if>
+			</axsl:template>
+
+			<axsl:template match="{@resource}">
+
+				<axsl:call-template name="{generate-id()}-paginate">
+					<xsl:if test="@paginate">
+						<axsl:with-param name="count" select="count({@paginate})" />
+					</xsl:if>
+				</axsl:call-template>
+
 				<xsl:for-each select="map:alias">
 					<axsl:variable name="alias-{position()}-filename">
 						<axsl:value-of select="concat(@uri, {@path})" />

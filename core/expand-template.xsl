@@ -47,6 +47,8 @@
 						<!-- Template is an XHTML file -->
 						<axsl:template name="{/bat:templates/bat:template[position()=1]/xhtml:html/xhtml:head/xhtml:title}">
 							<axsl:param name="context" />
+							<axsl:param name="position" />
+							<axsl:param name="count" />
 
 							<axsl:element name="html" namespace="http://www.w3.org/1999/xhtml">
 								<axsl:attribute name="xml:lang"><axsl:value-of select="$output-language" /></axsl:attribute>
@@ -57,9 +59,9 @@
 								<head>
 									<title>
 										<axsl:apply-templates select="." mode="title">
-											<axsl:with-param name="context">
-												<axsl:value-of select="$context" />
-											</axsl:with-param>
+											<axsl:with-param name="context" select="$context" />
+											<axsl:with-param name="position" select="$position" />
+											<axsl:with-param name="count" select="$count" />
 										</axsl:apply-templates>
 									</title>
 
@@ -94,6 +96,8 @@
 						</xsl:if>
 						<axsl:template name="{child::*[1]/@bgn:template-name}">
 							<axsl:param name="context" />
+							<axsl:param name="position" />
+							<axsl:param name="count" />
 							<xsl:apply-templates select="*" mode="copy" />
 						</axsl:template>
 					</xsl:otherwise>
@@ -157,6 +161,8 @@
 				-->
 				<axsl:apply-templates select="." mode="{$name}">
 					<axsl:with-param name="context" select="$context" />
+					<axsl:with-param name="position" select="$position" />
+					<axsl:with-param name="count" select="$count" />
 				</axsl:apply-templates>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -165,9 +171,9 @@
 	<xsl:template match="bgn:plugin[@name]" mode="copy">
 		<axsl:apply-templates select="." mode="plugin-{@name}">
 			<axsl:with-param name="warn">yes</axsl:with-param>
-			<axsl:with-param name="context">
-				<axsl:value-of select="$context" />
-			</axsl:with-param>
+			<axsl:with-param name="context" select="$context" />
+			<axsl:with-param name="position" select="$position" />
+			<axsl:with-param name="count" select="$count" />
 			<xsl:apply-templates mode="copy"/>
 		</axsl:apply-templates>
 	</xsl:template>
