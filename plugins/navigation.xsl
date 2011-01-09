@@ -25,7 +25,11 @@
 							<xsl:value-of select="$root-label" />
 						</xsl:when>
 						<xsl:otherwise>
-						<xsl:apply-templates select="/res:resources" mode="title" />
+							<xsl:apply-templates select="." mode="title-short">
+								<xsl:with-param name="context">
+									<xsl:value-of select="plugin-breadcrumbs" />
+								</xsl:with-param>
+							</xsl:apply-templates>
 						</xsl:otherwise>
 					</xsl:choose>
 					</xsl:element>
@@ -44,7 +48,11 @@
 							<xsl:text> selected</xsl:text>
 						</xsl:if>
 					</xsl:attribute>
-					<xsl:apply-templates select="." mode="title" />
+					<xsl:apply-templates select="." mode="title-short">
+						<xsl:with-param name="context">
+							<xsl:value-of select="plugin-breadcrumbs" />
+						</xsl:with-param>
+					</xsl:apply-templates>
 				</xsl:element>
 				<xsl:if test="not(position() = last())">
 					<bgn:navigation-separator />
