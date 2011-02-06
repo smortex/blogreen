@@ -129,7 +129,44 @@
 					</axsl:attribute>
 				</xsl:for-each>
 
-				<axsl:apply-templates select="@*|node()" />
+				<axsl:for-each select="@*">
+					<axsl:apply-templates select="." />
+				</axsl:for-each>
+
+				<axsl:for-each select="node()|text()">
+					<axsl:choose>
+						<axsl:when test="self::res:*">
+							<!--
+							Proccess mapped node children.  If they are also mapped,
+							proccess them, otherwise just copy the nodes.  The fact
+							that a res:foo items can be mapped when it is a children
+							of a res:bar element and not when it is the children of
+							a res:baz elements makes the following a bit tricky.
+							-->
+							<xsl:choose>
+								<xsl:when test="map:map">
+									<axsl:choose>
+										<xsl:for-each select="map:map">
+											<axsl:when test="self::{@resource}">
+												<axsl:apply-templates select="." />
+											</axsl:when>
+										</xsl:for-each>
+										<axsl:otherwise>
+											<axsl:copy-of select="." />
+										</axsl:otherwise>
+									</axsl:choose>
+								</xsl:when>
+								<xsl:otherwise>
+									<axsl:copy-of select="." />
+								</xsl:otherwise>
+							</xsl:choose>
+						</axsl:when>
+						<axsl:otherwise>
+							<axsl:copy-of select="." />
+						</axsl:otherwise>
+					</axsl:choose>
+					<axsl:apply-templates select="{@resource}" />
+				</axsl:for-each>
 			</axsl:copy>
 		</axsl:template>
 
