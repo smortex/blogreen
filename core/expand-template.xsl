@@ -82,6 +82,9 @@
 								</head>
 
 								<axsl:element name="body" namespace="http://www.w3.org/1999/xhtml">
+									<xsl:for-each select="xhtml:html/xhtml:body/@*">
+										<axsl:attribute name="{name()}"><xsl:value-of select="." /></axsl:attribute>
+									</xsl:for-each>
 									<bgn:body-onload warn="no" />
 									<xsl:apply-templates select="xhtml:html/xhtml:body/*" mode="copy" />
 								</axsl:element>
