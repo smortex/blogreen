@@ -79,8 +79,8 @@
 																			<xsl:with-param name="replacement" select="'SS'" />
 																			<xsl:with-param name="s">
 																				<xsl:value-of select="translate($s,
-																					'—ÁÂÄÀáâäàÇçÉÊËÈéêëèÍÎÌíîìÑǸñǹÓÔÖÒóôöòÚÛÜŮÙúûüůù',
-																					'-AAAAaaaaCcEEEEeeeeIIIiiiNNnnOOOOooooUUUUUuuuuu')" />
+																					'—ÁÃÂÄÀáâāãäàÇçĐđÉẼĒÊËÈéẽēêëèÍĨĪÎÌíĩīîìÑǸñǹÓÕÔÖÒóõōôöòÚŨŪÛÜŮÙúũūûüůù',
+																					'-AAAAAaaaaaaCcDdEEEEEEeeeeeeIIIIIiiiiiNNnnOOOOOooooooUUUUUUUuuuuuuu')" />
 																			</xsl:with-param>
 																		</xsl:call-template>
 																	</xsl:with-param>
