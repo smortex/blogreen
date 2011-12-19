@@ -60,7 +60,7 @@
 					<axsl:document href="{{$filename}}" method="xml" indent="yes">
 						<axsl:copy select=".">
 							<axsl:attribute name="uri">/</axsl:attribute>
-							<axsl:apply-templates />
+							<axsl:apply-templates select="@*|*" />
 						</axsl:copy>
 					</axsl:document>
 				</axsl:template>
