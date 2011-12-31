@@ -1,4 +1,4 @@
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:bgn="http://blogreen.org">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0" xmlns:bgn="http://blogreen.org">
 
 	<xsl:template match="*[@bgn:cdata = 'yes']">
 		<xsl:element name="{name(.)}">
