@@ -89,6 +89,11 @@
 								</axsl:copy>
 							</axsl:document>
 						</axsl:when>
+						<axsl:when test="/xhtml:div[@id='raw-content']">
+							<axsl:document href="{{$filename}}" method="text" indent="no">
+								<axsl:apply-templates select="*" />
+							</axsl:document>
+						</axsl:when>
 						<axsl:otherwise>
 							<axsl:document href="{{$filename}}" method="xml" indent="yes">
 								<axsl:copy>
