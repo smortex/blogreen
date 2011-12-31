@@ -8,7 +8,7 @@
 				</xsl:if>
 			</xsl:for-each>
 			<xsl:text disable-output-escaping="yes">&lt;![CDATA[</xsl:text>
-			<xsl:apply-templates select="*" />
+			<xsl:apply-templates select="*|text()" />
 			<xsl:text disable-output-escaping="yes">]]&gt;</xsl:text>
 		</xsl:element>
 	</xsl:template>
