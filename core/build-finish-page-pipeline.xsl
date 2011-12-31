@@ -18,7 +18,7 @@
 			<xsl:with-param name="filename" select="$filename" />
 		</xsl:call-template>
 
-		<xsl:document href="{$filename}" method="xml" indent="yes">
+		<xsl:document href="{$filename}" method="xml" indent="no">
 			<axsl:stylesheet version="1.0" xmlns:bgn="http://blogreen.org" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 				<axsl:import href="{$BLOGREEN}/finish-pages.xsl" />
 
@@ -83,7 +83,7 @@
 
 					<axsl:choose>
 						<axsl:when test="/xhtml:html">
-							<axsl:document href="{{$filename}}" method="xml" indent="yes" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+							<axsl:document href="{{$filename}}" method="xml" indent="no" doctype-public="-//W3C//DTD XHTML 1.1//EN" doctype-system="http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 								<axsl:copy>
 									<axsl:apply-templates select="*" />
 								</axsl:copy>
@@ -95,7 +95,7 @@
 							</axsl:document>
 						</axsl:when>
 						<axsl:otherwise>
-							<axsl:document href="{{$filename}}" method="xml" indent="yes">
+							<axsl:document href="{{$filename}}" method="xml" indent="no">
 								<axsl:copy>
 									<axsl:apply-templates select="*" />
 								</axsl:copy>
