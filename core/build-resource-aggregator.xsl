@@ -135,6 +135,9 @@
 
 				<axsl:for-each select="node()|text()">
 					<axsl:choose>
+						<axsl:when test="self::res:import">
+							<axsl:apply-templates select="." />
+						</axsl:when>
 						<axsl:when test="self::res:*">
 							<!--
 							Proccess mapped node children.  If they are also mapped,
